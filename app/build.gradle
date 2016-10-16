@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.lxchild.mobileclass"
-        minSdkVersion 10
+        minSdkVersion 11
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -29,12 +29,19 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //引入Logger
     compile 'com.orhanobut:logger:1.15'
     //引入图片加载框架fresco
     compile 'com.facebook.fresco:fresco:0.14.1'
+    //引入appintro
+    compile 'com.github.paolorotolo:appintro:4.1.0'
+
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

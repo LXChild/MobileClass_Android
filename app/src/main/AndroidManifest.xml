@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lxchild.mobileclass">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MyApplication"
@@ -20,6 +21,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity"/>
+        <activity android:name=".IntroduceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <service android:name=".InitializeService">
             <intent-filter>/
                 <action android:name="com.lxchild.mobileclass.service.action.INIT"/>
