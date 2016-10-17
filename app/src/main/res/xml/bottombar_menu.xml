@@ -1,0 +1,14 @@
+<tabs>
+    <tab
+        id="@+id/tab_trending"
+        icon="@drawable/ic_account"
+        title="@string/menu_trending" />
+    <tab
+        id="@+id/tab_most_stars"
+        icon="@drawable/ic_account"
+        title="@string/menu_most_star" />
+    <tab
+        id="@+id/tab_account"
+        icon="@drawable/ic_account"
+        title="@string/menu_account" />
+</tabs>

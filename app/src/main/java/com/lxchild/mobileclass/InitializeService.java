@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.orhanobut.logger.Logger;
 
 /**
  * Created by LXChild on 16/10/2016.
@@ -37,8 +36,6 @@ public class InitializeService extends IntentService {
     }
 
     private void performInit() {
-        Logger.d("performInit begin:" + System.currentTimeMillis());
         Fresco.initialize(this);
-        Logger.d("performInit end:" + System.currentTimeMillis());
     }
 }

@@ -10,11 +10,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-        }
+//        externalNativeBuild {
+//            cmake {
+//                cppFlags ""
+//            }
+//        }
     }
     buildTypes {
         release {
@@ -22,11 +22,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
-        }
-    }
+//    externalNativeBuild {
+//        cmake {
+//            path "CMakeLists.txt"
+//        }
+//    }
 }
 
 repositories {
@@ -41,6 +41,8 @@ dependencies {
     compile 'com.facebook.fresco:fresco:0.14.1'
     //引入appintro
     compile 'com.github.paolorotolo:appintro:4.1.0'
+    //引入BottomBar
+    compile 'com.roughike:bottom-bar:2.0.2'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
