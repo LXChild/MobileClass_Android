@@ -1,4 +1,4 @@
-package com.lxchild.mobileclass;
+package com.lxchild.appStart;
 
 import android.app.Application;
 

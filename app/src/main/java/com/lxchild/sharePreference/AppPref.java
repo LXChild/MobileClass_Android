@@ -1,4 +1,4 @@
-package com.lxchild.data;
+package com.lxchild.sharePreference;
 
 import android.content.Context;
 import android.content.SharedPreferences;

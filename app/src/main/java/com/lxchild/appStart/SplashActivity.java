@@ -1,9 +1,10 @@
-package com.lxchild.mobileclass;
+package com.lxchild.appStart;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.lxchild.data.AppPref;
+import com.lxchild.sharePreference.AppPref;
+import com.lxchild.mobileclass.MainActivity;
 
 /**
  * Created by LXChild on 16/10/2016.

@@ -1,10 +1,11 @@
-package com.lxchild.mobileclass;
+package com.lxchild.appStart;
 
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.lzy.okgo.OkGo;
 
 /**
  * Created by LXChild on 16/10/2016.
@@ -37,5 +38,6 @@ public class InitializeService extends IntentService {
 
     private void performInit() {
         Fresco.initialize(this);
+        OkGo.init(getApplication());
     }
 }

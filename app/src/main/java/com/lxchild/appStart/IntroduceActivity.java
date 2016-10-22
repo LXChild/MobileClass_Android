@@ -1,4 +1,4 @@
-package com.lxchild.mobileclass;
+package com.lxchild.appStart;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
-import com.lxchild.data.AppPref;
+import com.lxchild.sharePreference.AppPref;
+import com.lxchild.mobileclass.MainActivity;
+import com.lxchild.mobileclass.R;
 
 /**
  * Created by LXChild on 16/10/2016.

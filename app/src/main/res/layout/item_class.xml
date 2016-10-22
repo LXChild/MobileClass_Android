@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/item_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            fresco:placeholderImage="@color/white"
+            fresco:failureImage="@mipmap/ic_launcher"
+            fresco:retryImage="@mipmap/ic_launcher"
+            fresco:viewAspectRatio="1"
+            fresco:fadeDuration="500"/>
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical"
+            android:maxLines="2"
+            android:text="@string/app_name"
+            android:layout_toRightOf="@+id/item_image"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size_18"/>
+
+        <TextView
+            android:id="@+id/item_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:gravity="left|center_vertical"
+            android:maxLines="4"
+            android:text="@string/app_name"
+            android:layout_toRightOf="@+id/item_image"
+            android:layout_below="@+id/item_name"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="@dimen/text_size_12"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
+
+

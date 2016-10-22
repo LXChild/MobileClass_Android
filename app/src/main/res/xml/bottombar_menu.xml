@@ -1,14 +1,18 @@
 <tabs>
     <tab
-        id="@+id/tab_trending"
+        id="@+id/tab_classes"
         icon="@drawable/ic_account"
-        title="@string/menu_trending" />
+        title="@string/tab_classes" />
     <tab
-        id="@+id/tab_most_stars"
+        id="@+id/tab_my_class"
         icon="@drawable/ic_account"
-        title="@string/menu_most_star" />
+        title="@string/tab_my_class" />
     <tab
-        id="@+id/tab_account"
+        id="@+id/tab_forum"
         icon="@drawable/ic_account"
-        title="@string/menu_account" />
+        title="@string/tab_forum" />
+    <tab
+        id="@+id/tab_mine"
+        icon="@drawable/ic_account"
+        title="@string/tab_mine" />
 </tabs>

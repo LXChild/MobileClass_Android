@@ -2,9 +2,14 @@
     <string name="app_name">MobileClass</string>
 
     <!-- main menu labels -->
-    <string name="menu_trending">Trending</string>
-    <string name="menu_most_star">Most Stars</string>
-    <string name="menu_account">Profile</string>
+    <string name="tab_classes">Classes</string>
+    <string name="tab_my_class">MyClass</string>
+    <string name="tab_forum">Forum</string>
+    <string name="tab_mine">Mine</string>
     <string name="exit_click_back_again">Press Back again to exit application.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_search">Search</string>
 
 </resources>
