@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import com.lxchild.sharePreference.AppPref;
 import com.lxchild.mobileclass.MainActivity;
+import com.lxchild.sharePreference.SignInPref;
+import com.lxchild.signin.view.SignInActivity;
 
 /**
  * Created by LXChild on 16/10/2016.
@@ -19,9 +21,10 @@ public class SplashActivity extends Activity {
         // 目的是减少首屏渲染
         if (AppPref.isFirstRunning(this)) {
             IntroduceActivity.launch(this);
-        }
-        else {
+        } else if (SignInPref.isIsSignIn(this)) {
             MainActivity.launch(this);
+        } else {
+            SignInActivity.launch(this);
         }
         finish();
     }

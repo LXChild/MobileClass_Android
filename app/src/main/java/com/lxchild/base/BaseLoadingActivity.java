@@ -2,16 +2,15 @@ package com.lxchild.base;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 
-import com.lxchild.intrface.LoadView;
+import com.lxchild.intrface.ILoadView;
 import com.lxchild.widget.LoadingView;
 
 /**
  * Created by LXChild on 22/10/2016.
  */
 
-public class BaseLoadingActivity extends AppCompatActivity implements LoadView{
+public class BaseLoadingActivity extends BaseExitActivity implements ILoadView {
 
     private LoadingView mLoadingView;
     @Override

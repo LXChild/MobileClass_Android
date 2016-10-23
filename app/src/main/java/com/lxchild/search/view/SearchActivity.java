@@ -1,4 +1,4 @@
-package com.lxchild.search.controller;
+package com.lxchild.search.view;
 
 import android.content.Context;
 import android.content.Intent;

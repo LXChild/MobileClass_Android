@@ -8,9 +8,9 @@ import android.support.v4.app.Fragment;
 
 import com.github.paolorotolo.appintro.AppIntro;
 import com.github.paolorotolo.appintro.AppIntroFragment;
-import com.lxchild.sharePreference.AppPref;
-import com.lxchild.mobileclass.MainActivity;
 import com.lxchild.mobileclass.R;
+import com.lxchild.sharePreference.AppPref;
+import com.lxchild.signin.view.SignInActivity;
 
 /**
  * Created by LXChild on 16/10/2016.
@@ -87,8 +87,9 @@ public class IntroduceActivity extends AppIntro {
 
     private void goMain() {
         AppPref.setAlreadyRun(this);
+        SignInActivity.launch(this);
 
-        MainActivity.launch(this);
+        //MainActivity.launch(this);
         finish();
     }
 }

@@ -6,25 +6,25 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.lxchild.appStart.MyApplication;
+import com.lxchild.base.BaseExitActivity;
 import com.lxchild.fragment.ClassListFragment;
 import com.lxchild.fragment.ForumFragment;
 import com.lxchild.fragment.MineFragment;
 import com.lxchild.fragment.MyClassFragment;
-import com.lxchild.search.controller.SearchActivity;
-import com.orhanobut.logger.Logger;
+import com.lxchild.search.view.SearchActivity;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseExitActivity {
 
     // Used to load the 'native-lib' library on application startup.
 //    static {
@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
     private OnTabSelectListener mTabClickListener = new OnTabSelectListener() {
         @Override
         public void onTabSelected(@IdRes int tabId) {
-            Logger.d("onTabSelected");
             changeTitle(tabId);
             switchMenu(getFragmentName(tabId));
         }
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         // finish while click back key 2 times during 1s.
         if ((System.currentTimeMillis() - mLastBackTime) < 1000) {
-            finish();
+            MyApplication.getInstance().AppExit();
         } else {
             mLastBackTime = System.currentTimeMillis();
             Toast.makeText(this, R.string.exit_click_back_again, Toast.LENGTH_SHORT).show();
