@@ -6,7 +6,7 @@
     <string name="tab_my_class">MyClass</string>
     <string name="tab_forum">Forum</string>
     <string name="tab_mine">Mine</string>
-    <string name="exit_click_back_again">Press Back again to exit application.</string>
+    <string name="exit_click_back_again">Press again to exit</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -4,10 +4,11 @@ import android.content.Context;
 
 import com.lxchild.bean.UserBean;
 import com.lxchild.signin.model.ISignInModel;
-import com.lxchild.signin.model.Observable;
 import com.lxchild.signin.model.SignInModel;
-import com.lxchild.signin.view.IObserver;
 import com.lxchild.signin.view.ISignInView;
+
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Created by LXChild on 22/10/2016.
@@ -21,7 +22,7 @@ public class SignInPresenter {
         mSignInView = view;
         mSignInModel = new SignInModel(context);
         Observable observable = (Observable) mSignInModel;
-        observable.addObserver((IObserver) mSignInView);
+        observable.addObserver((Observer) mSignInView);
     }
 
     public void saveUser(String userName, String password) {
@@ -39,8 +40,8 @@ public class SignInPresenter {
         mSignInModel.getAgnomenCode();
     }
 
-    public boolean verifyUser(String userName, String password) {
+    public void verifyUser(String userName, String password, String agnomen) {
         saveUser(userName, password);
-        return mSignInModel.verifyUser(userName, password);
+        mSignInModel.verifyUser(userName, password, agnomen);
     }
 }

@@ -59,9 +59,12 @@ dependencies {
     // HeaderViewPager
     // https://github.com/jeasonlzy/HeaderViewPager
     compile 'com.lzy.widget:view-core:0.2.1'
-    //Material-ish Progress
-    //https://github.com/pnikosis/materialish-progress
+    // Material-ish Progress
+    // https://github.com/pnikosis/materialish-progress
     compile 'com.pnikosis:materialish-progress:1.7'
+    // Jsoup
+    // https://github.com/jhy/jsoup
+    compile 'org.jsoup:jsoup:1.9.2'
 
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'

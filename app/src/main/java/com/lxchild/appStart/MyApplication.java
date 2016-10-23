@@ -17,7 +17,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        singleton=this;
+        singleton = this;
         InitializeService.start(this);
     }
 
@@ -29,18 +29,20 @@ public class MyApplication extends Application {
     /**
      * add Activity 添加Activity到栈
      */
-    public void addActivity(Activity activity){
-        if(activityStack ==null){
-            activityStack =new Stack<Activity>();
+    public void addActivity(Activity activity) {
+        if (activityStack == null) {
+            activityStack = new Stack<>();
         }
         activityStack.add(activity);
     }
+
     /**
      * get current Activity 获取当前Activity（栈中最后一个压入的）
      */
     public Activity currentActivity() {
         return activityStack.lastElement();
     }
+
     /**
      * 结束当前Activity（栈中最后一个压入的）
      */

@@ -11,5 +11,5 @@ public interface ISignInModel {
     void setPassword (String password);
     UserBean load();//通过id读取user信息,返回一个UserBean
     void getAgnomenCode();
-    boolean verifyUser(String userName, String password);
+    void verifyUser(String userName, String password, String agnomen);
 }

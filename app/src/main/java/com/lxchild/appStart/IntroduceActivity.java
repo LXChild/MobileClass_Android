@@ -69,14 +69,14 @@ public class IntroduceActivity extends AppIntro {
     public void onSkipPressed(Fragment currentFragment) {
         super.onSkipPressed(currentFragment);
         // Do something when users tap on Skip button.
-        goMain();
+        goSignIn();
     }
 
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
         // Do something when users tap on Done button.
-        goMain();
+        goSignIn();
     }
 
     @Override
@@ -85,11 +85,9 @@ public class IntroduceActivity extends AppIntro {
         // Do something when the slide changes.
     }
 
-    private void goMain() {
+    private void goSignIn() {
         AppPref.setAlreadyRun(this);
         SignInActivity.launch(this);
-
-        //MainActivity.launch(this);
         finish();
     }
 }

@@ -1,12 +1,18 @@
 package com.lxchild.signin.view;
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -20,10 +26,15 @@ import android.widget.Toast;
 import com.lxchild.base.BaseLoadingActivity;
 import com.lxchild.mobileclass.MainActivity;
 import com.lxchild.mobileclass.R;
-import com.lxchild.signin.model.Observable;
+import com.lxchild.sharePreference.SignInPref;
 import com.lxchild.signin.presenter.SignInPresenter;
+import com.lxchild.utils.NetworkUtils;
+import com.orhanobut.logger.Logger;
 
-import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +43,7 @@ import butterknife.ButterKnife;
  * Created by LXChild on 22/10/2016.
  */
 
-public class SignInActivity extends BaseLoadingActivity implements ISignInView, View.OnClickListener, View.OnLongClickListener, IObserver {
+public class SignInActivity extends BaseLoadingActivity implements ISignInView, View.OnClickListener, View.OnLongClickListener, Observer {
     @BindView(R.id.et_username)
     EditText et_name;
     @BindView(R.id.et_password)
@@ -48,34 +59,17 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     @BindView(R.id.registfer)
     Button ONLYTEST;
 
-    int selectIndex=1;
-    int tempSelect=selectIndex;
-    boolean isReLogin=false;
-    private int SERVER_FLAG=0;
+    int selectIndex = 1;
+    int tempSelect = selectIndex;
+    boolean isReLogin = false;
+    private int SERVER_FLAG = 0;
 
     private RelativeLayout countryselect;
     private TextView coutry_phone_sn, coutryName;//
-    public final static int LOGIN_ENABLE=0x01;    //注册完毕了
-    public final static int LOGIN_UNABLE=0x02;    //注册完毕了
-    public final static int PASS_ERROR=0x03;      //注册完毕了
-    public final static int NAME_ERROR=0x04;      //注册完毕了
-
-    private static class MyHandler extends Handler {
-        private WeakReference<SignInActivity> activityWeakReference;
-
-        public MyHandler(SignInActivity activity) {
-            activityWeakReference = new WeakReference<>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            SignInActivity activity = activityWeakReference.get();
-            if (activity != null) {
-            }
-        }
-    }
-
-    private MyHandler mHandler = new MyHandler(this);
+    public final static int LOGIN_ENABLE = 0x01;    //注册完毕了
+    public final static int LOGIN_UNABLE = 0x02;    //注册完毕了
+    public final static int PASS_ERROR = 0x03;      //注册完毕了
+    public final static int NAME_ERROR = 0x04;      //注册完毕了
 
     @BindView(R.id.bt_username_clear)
     Button bt_username_clear;
@@ -105,6 +99,24 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         initView();
+        checkNetwork();
+    }
+
+    private void checkNetwork() {
+        if (!NetworkUtils.isAvailableByPing()) {
+            Dialog dialog = new AlertDialog.Builder(this)
+                    .setTitle("提示")
+                    .setMessage("网络不可用，是否打开网络设置？")
+                    .setPositiveButton("打开WIFI", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            NetworkUtils.openWirelessSettings(SignInActivity.this);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create();
+            dialog.show();
+        }
     }
 
     private void initView() {
@@ -141,9 +153,11 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
      */
     private void initWatcher() {
         username_watcher = new TextWatcher() {
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             public void afterTextChanged(Editable s) {
                 et_pass.setText("");
@@ -155,23 +169,31 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
             }
         };
         password_watcher = new TextWatcher() {
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             public void afterTextChanged(Editable s) {
-                if(s.toString().length()>0){
+                if (s.toString().length() > 0) {
                     bt_pwd_clear.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     bt_pwd_clear.setVisibility(View.INVISIBLE);
                 }
             }
         };
         agnomen_watcher = new TextWatcher() {
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            public void beforeTextChanged(CharSequence s, int start, int count,int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             public void afterTextChanged(Editable s) {
-                if(s.toString().length()>0){
+                if (s.toString().length() > 0) {
                     bt_agnomen_clear.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     bt_agnomen_clear.setVisibility(View.INVISIBLE);
                 }
             }
@@ -179,12 +201,43 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     }
 
     @Override
-    public void update(Observable observable) {
-        if (observable.getObj() == null) {
-            Toast.makeText(this, "get agnomen code failed!", Toast.LENGTH_SHORT).show();
-            return;
+    public void update(Observable o, Object arg) {
+        dismissLoading();
+        Message msg = (Message) arg;
+        switch (msg.what) {
+            case 0x01:
+                if (msg.obj == null) {
+                    Toast.makeText(this, "get agnomen code failed!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                bt_agnomen.setBackground(new BitmapDrawable(null, (String) msg.obj));
+                break;
+            case 0x02:
+                if (msg.obj == null) {
+                    Toast.makeText(this, "sign in failed!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Logger.d(toShow((List<Map<String, String>>) msg.obj));
+                SignInPref.setAlreadySignIn(this);
+                MainActivity.launch(this);
+                break;
+            default:
+                break;
         }
-        bt_agnomen.setBackground(new BitmapDrawable(null, (String) observable.getObj()));
+
+    }
+
+    private StringBuilder toShow(List<Map<String, String>> scheduleList){
+        StringBuilder sb = new StringBuilder();
+        for(Map<String,String> map:scheduleList){
+            for(String key : map.keySet()) {
+                if(!"".equals(map.get(key))){
+                    sb.append(key).append("----").append(map.get(key)).append("\n");
+                }
+            }
+            sb.append("\n============================\n");
+        }
+        return sb;
     }
 
     @Override
@@ -193,8 +246,9 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
             case R.id.login:  //登陆
                 // TODO login
                 mSignInPresenter.saveUser(getUserName(), getPassword());
-                mSignInPresenter.verifyUser(getUserName(), getPassword());
-                MainActivity.launch(this);
+                mSignInPresenter.verifyUser(getUserName(), getPassword(), et_agnomen.getText().toString().trim());
+                showLoading();
+                // MainActivity.launch(this);
                 break;
             case R.id.login_error: //无法登陆(忘记密码了吧)
                 // TODO go to forget password activity
@@ -203,7 +257,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
                 // TODO go to forget register activity
                 break;
             case R.id.registfer:
-                if(SERVER_FLAG>10){
+                if (SERVER_FLAG > 10) {
                     Toast.makeText(this, "[内部测试--谨慎操作]", Toast.LENGTH_SHORT).show();
                 }
                 SERVER_FLAG++;
@@ -216,12 +270,12 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
                 et_pass.setText("");
                 break;
             case R.id.bt_pwd_eye:
-                if(et_pass.getInputType() == (InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD)){
+                if (et_pass.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)) {
                     bt_pwd_eye.setBackgroundResource(R.mipmap.ic_launcher);
                     et_pass.setInputType(InputType.TYPE_CLASS_TEXT);
-                }else{
+                } else {
                     bt_pwd_eye.setBackgroundResource(R.mipmap.ic_launcher);
-                    et_pass.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    et_pass.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 }
                 et_pass.setSelection(et_pass.getText().toString().length());
                 break;
@@ -238,7 +292,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     public boolean onLongClick(View v) {
         switch (v.getId()) {
             case R.id.registfer:
-                if(SERVER_FLAG>9){
+                if (SERVER_FLAG > 9) {
 
                 }
                 //   SERVER_FLAG++;
@@ -268,9 +322,48 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
 
     }
 
+    public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 0x01;
+    public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0x02;
+
     @Override
-    protected void onDestroy() {
-        mHandler.removeCallbacksAndMessages(null);
-        super.onDestroy();
+    protected void checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请WRITE_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    WRITE_EXTERNAL_STORAGE_REQUEST_CODE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            //申请READ_EXTERNAL_STORAGE权限
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    READ_EXTERNAL_STORAGE_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    protected void doNext(int requestCode, int[] grantResults) {
+        switch (requestCode) {
+            case WRITE_EXTERNAL_STORAGE_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    Toast.makeText(this, "You have granted WRITE_EXTERNAL_STORAGE permission.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Permission Denied
+                    Toast.makeText(this, "System can't display the agnomen code!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case READ_EXTERNAL_STORAGE_REQUEST_CODE:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission Granted
+                    Toast.makeText(this, "You have granted READ_EXTERNAL_STORAGE permission.", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Permission Denied
+                    Toast.makeText(this, "System can't display the agnomen code!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
+                break;
+        }
     }
 }

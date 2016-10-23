@@ -1,6 +1,7 @@
 package com.lxchild.base;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import com.lxchild.appStart.MyApplication;
@@ -16,7 +17,18 @@ public abstract class BaseExitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //添加Activity到堆栈
         MyApplication.getInstance().addActivity(this);
+        checkPermission();
     }
+
+    protected void checkPermission() {};
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        doNext(requestCode,grantResults);
+    }
+
+    protected void doNext(int requestCode, int[] grantResults){}
 
     @Override
     protected void onDestroy() {
