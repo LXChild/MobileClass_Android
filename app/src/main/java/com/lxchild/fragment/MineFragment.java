@@ -3,13 +3,17 @@ package com.lxchild.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lxchild.bean.UserBean;
 import com.lxchild.mobileclass.R;
+import com.lxchild.sharePreference.AccountPref;
+import com.lxchild.sharePreference.SignInPref;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +24,7 @@ import butterknife.OnClick;
  */
 
 public class MineFragment extends Fragment {
+
     @BindView(R.id.user_icon)
     ImageView mUserIcon;
     @BindView(R.id.username)
@@ -43,15 +48,15 @@ public class MineFragment extends Fragment {
     }
 
     private void updateUser() {
-//        if (AccountPref.isLogon(getContext())) {
-//            User user = AccountPref.getLogonUser(getContext());
-//            ImageLoader.loadWithCircle(getContext(), user.getAvatar_url(), mUserIcon);
-//            String displayName = TextUtils.isEmpty(user.getName()) ? user.getLogin() : user.getName();
-//            mUsername.setText(displayName);
-//        }
-//        else {
-//            mUsername.setText(R.string.please_login);
-//        }
+        if (SignInPref.isSignIn(getContext())) {
+            UserBean user = AccountPref.getSignInUser(getContext());
+            // TODO load user icon
+            String displayName = TextUtils.isEmpty(user.getName()) ? getString(R.string.please_sign_in) : user.getName();
+            mUserName.setText(displayName);
+        }
+        else {
+            mUserName.setText(R.string.please_sign_in);
+        }
     }
 
     @OnClick({R.id.account_view, R.id.history, R.id.share_app, R.id.feedback, R.id.settings})

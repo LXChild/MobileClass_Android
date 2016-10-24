@@ -14,7 +14,7 @@ import java.util.Random;
  * 修订历史：
  * ================================================
  */
-public class Utils {
+public class GenerateColorUtil {
 
     /** 生成漂亮的颜色 */
     public static int generateBeautifulColor() {

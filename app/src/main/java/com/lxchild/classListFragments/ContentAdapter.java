@@ -4,8 +4,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.lxchild.intrface.HeaderViewPagerFragment;
-
 import java.util.List;
 
 /**
@@ -23,7 +21,7 @@ public class ContentAdapter extends FragmentPagerAdapter {
         this.mFragments = fragments;
     }
 
-    public String[] titles = new String[]{"ScrollView", "ListView", "GridView", "RecyclerView", "WebView"};
+    private String[] titles = new String[]{"课程一", "课程二", "课程三"};
 
     @Override
     public CharSequence getPageTitle(int position) {

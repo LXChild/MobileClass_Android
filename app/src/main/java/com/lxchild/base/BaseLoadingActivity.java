@@ -3,32 +3,31 @@ package com.lxchild.base;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 
-import com.lxchild.intrface.ILoadView;
-import com.lxchild.widget.LoadingView;
+import com.lxchild.widget.LoadingDialog;
+import com.orhanobut.logger.Logger;
 
 /**
  * Created by LXChild on 22/10/2016.
  */
 
-public class BaseLoadingActivity extends BaseExitActivity implements ILoadView {
+public abstract class BaseLoadingActivity extends BaseExitActivity {
 
-    private LoadingView mLoadingView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mLoadingView = new LoadingView(this);
     }
-    @Override
+
     public void showLoading() {
-        mLoadingView.show();
+        Logger.d("showLoading>>>>>>>>>>>>>>>>");
+        LoadingDialog.show(this);
     }
 
-    @Override
     public void dismissLoading() {
-        mLoadingView.dismiss();
+
+        Logger.d("dismissLoading>>>>>>>>>>>>>>>>");
+        LoadingDialog.dismiss(this);
     }
 
-    @Override
     public void error(Throwable e) {
         Snackbar.make(getWindow().getDecorView(), e.getMessage(), Snackbar.LENGTH_LONG).show();
     }

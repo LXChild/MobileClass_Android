@@ -1,4 +1,4 @@
-package com.lxchild.intrface;
+package com.lxchild.classListFragments;
 
 import android.support.v4.app.Fragment;
 

@@ -13,19 +13,18 @@ import android.widget.AbsListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.lxchild.intrface.HeaderViewPagerFragment;
 import com.lxchild.mobileclass.R;
-import com.lxchild.utils.Utils;
+import com.lxchild.utils.GenerateColorUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewFragment extends HeaderViewPagerFragment {
+public class ContentList_3_Fragment extends HeaderViewPagerFragment {
 
     private RecyclerView mRecyclerView;
 
-    public static RecyclerViewFragment newInstance() {
-        return new RecyclerViewFragment();
+    public static ContentList_3_Fragment newInstance() {
+        return new ContentList_3_Fragment();
     }
 
     @Override
@@ -90,7 +89,7 @@ public class RecyclerViewFragment extends HeaderViewPagerFragment {
                 ViewGroup.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
                 itemView.setLayoutParams(params);
                 itemView.setText(strings.get(position));
-                itemView.setBackgroundColor(Utils.generateBeautifulColor());
+                itemView.setBackgroundColor(GenerateColorUtil.generateBeautifulColor());
             }
         }
     }

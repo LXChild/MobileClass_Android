@@ -12,6 +12,9 @@ import com.lxchild.appStart.MyApplication;
 
 public abstract class BaseExitActivity extends AppCompatActivity {
 
+    public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 0x01;
+    public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0x02;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

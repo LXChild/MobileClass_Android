@@ -42,7 +42,7 @@
             app:pstsDividerColor="#00000000"
             app:pstsIndicatorColor="#2DA4F0"
             app:pstsIndicatorHeight="2dp"
-            app:pstsShouldExpand="false"
+            app:pstsShouldExpand="true"
             app:pstsTextAllCaps="false"
             app:pstsUnderlineHeight="2dp"/>
 

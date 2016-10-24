@@ -3,21 +3,27 @@ package com.lxchild.search.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.lxchild.base.BaseLoadingActivity;
+import com.lxchild.base.BaseRecyclerAdapter;
 import com.lxchild.bean.ClassBean;
 import com.lxchild.mobileclass.R;
-import com.lxchild.search.model.ClassListRecyclerAdapter;
+import com.lxchild.search.presenter.SearchPresenter;
 import com.lxchild.utils.InputMethodUtils;
 import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,12 +32,16 @@ import butterknife.ButterKnife;
  * Created by LXChild on 22/10/2016.
  */
 
-public class SearchActivity extends BaseLoadingActivity {
+public class SearchActivity extends BaseLoadingActivity implements ISearchView<ArrayList<ClassBean>>, Observer {
 
     @BindView(R.id.search_view)
     MaterialSearchView mSearchView;
+    @BindView(R.id.classes_list)
+    RecyclerView mRecyclerView;
 
     private ClassListRecyclerAdapter mAdapter;
+
+    private SearchPresenter mPresenter;
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, SearchActivity.class));
@@ -44,12 +54,13 @@ public class SearchActivity extends BaseLoadingActivity {
         initView();
     }
 
-    @NonNull
     private void initView() {
         ButterKnife.bind(this);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle(R.string.menu_search);
+
         mSearchView.setVoiceSearch(false);
         mSearchView.setOnQueryTextListener(mQueryListener);
         mSearchView.post(new Runnable() {
@@ -58,6 +69,33 @@ public class SearchActivity extends BaseLoadingActivity {
                 mSearchView.showSearch(false);
             }
         });
+
+        mAdapter = new ClassListRecyclerAdapter(mRecyclerView, null, R.layout.item_class);
+
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());//设置动画
+        mRecyclerView.addItemDecoration(new RecyclerViewDecoration());//设置分割线
+
+        mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(mOnItemClickListener);
+
+        mPresenter = new SearchPresenter(this);
+        mPresenter.loadData();
+    }
+
+    private BaseRecyclerAdapter.OnItemClickListener mOnItemClickListener = new BaseRecyclerAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, Object data, int position) {
+            // TODO go to detail page
+        }
+    };
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg != null) {
+            showSearchResult((ArrayList<ClassBean>)arg);
+        }
     }
 
     private MaterialSearchView.OnQueryTextListener mQueryListener = new MaterialSearchView.OnQueryTextListener() {
@@ -66,8 +104,7 @@ public class SearchActivity extends BaseLoadingActivity {
             InputMethodUtils.hideSoftInput(SearchActivity.this);
             mSearchView.closeSearch();
 
-            mCurrentKey = query;
-            search(mCurrentKey, mCurrentLang);
+            search(query);
             return true;
         }
 
@@ -77,12 +114,10 @@ public class SearchActivity extends BaseLoadingActivity {
         }
     };
 
-    private String mCurrentKey;
-    private String mCurrentLang;
-    private void search(String key, String lang) {
-        Logger.d("search, key = " + key + ", lang = " + lang);
+    private void search(String key) {
+        Logger.d("search, key = " + key);
         if (!TextUtils.isEmpty(key)) {
-          //  mPresenter.searchRepo(key, lang);
+            mPresenter.searchClass(key);
         }
     }
 
@@ -94,8 +129,10 @@ public class SearchActivity extends BaseLoadingActivity {
         return true;
     }
 
-    public void showSearchResult(ArrayList<ClassBean> repos) {
-        mAdapter.setNewData(repos);
+    @Override
+    public void showSearchResult(ArrayList<ClassBean> classes) {
+        mAdapter.setNewData(classes);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

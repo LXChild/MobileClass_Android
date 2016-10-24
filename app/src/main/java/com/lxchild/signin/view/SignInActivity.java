@@ -28,7 +28,7 @@ import com.lxchild.mobileclass.MainActivity;
 import com.lxchild.mobileclass.R;
 import com.lxchild.sharePreference.SignInPref;
 import com.lxchild.signin.presenter.SignInPresenter;
-import com.lxchild.utils.NetworkUtils;
+import com.lxchild.utils.NetworkUtil;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -99,24 +99,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         initView();
-        checkNetwork();
-    }
-
-    private void checkNetwork() {
-        if (!NetworkUtils.isAvailableByPing()) {
-            Dialog dialog = new AlertDialog.Builder(this)
-                    .setTitle("提示")
-                    .setMessage("网络不可用，是否打开网络设置？")
-                    .setPositiveButton("打开WIFI", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            NetworkUtils.openWirelessSettings(SignInActivity.this);
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .create();
-            dialog.show();
-        }
+        checkNetwork(this);
     }
 
     private void initView() {
@@ -244,11 +227,9 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:  //登陆
-                // TODO login
+                showLoading();
                 mSignInPresenter.saveUser(getUserName(), getPassword());
                 mSignInPresenter.verifyUser(getUserName(), getPassword(), et_agnomen.getText().toString().trim());
-                showLoading();
-                // MainActivity.launch(this);
                 break;
             case R.id.login_error: //无法登陆(忘记密码了吧)
                 // TODO go to forget password activity
@@ -324,6 +305,23 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
 
     public static final int WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 0x01;
     public static final int READ_EXTERNAL_STORAGE_REQUEST_CODE = 0x02;
+
+    private void checkNetwork(Context context) {
+        if (!NetworkUtil.isConnected(context)) {
+            Dialog dialog = new AlertDialog.Builder(context)
+                    .setTitle("提示")
+                    .setMessage("网络不可用，是否打开网络设置？")
+                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            NetworkUtil.openSetting(SignInActivity.this);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .create();
+            dialog.show();
+        }
+    }
 
     @Override
     protected void checkPermission() {

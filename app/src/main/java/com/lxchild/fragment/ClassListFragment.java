@@ -8,9 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lxchild.classListFragments.ContentAdapter;
+import com.lxchild.classListFragments.ContentList_1_Fragment;
+import com.lxchild.classListFragments.ContentList_2_Fragment;
+import com.lxchild.classListFragments.ContentList_3_Fragment;
 import com.lxchild.classListFragments.HeaderAdapter;
-import com.lxchild.classListFragments.RecyclerViewFragment;
-import com.lxchild.intrface.HeaderViewPagerFragment;
+import com.lxchild.classListFragments.HeaderViewPagerFragment;
 import com.lxchild.mobileclass.R;
 import com.lzy.widget.HeaderViewPager;
 import com.lzy.widget.tab.CircleIndicator;
@@ -67,7 +69,9 @@ public class ClassListFragment extends Fragment {
 
     private void initView() {
         mFragments = new ArrayList<>();
-        mFragments.add(RecyclerViewFragment.newInstance());
+        mFragments.add(ContentList_1_Fragment.newInstance());
+        mFragments.add(ContentList_2_Fragment.newInstance());
+        mFragments.add(ContentList_3_Fragment.newInstance());
 //        titleBar_Bg.setAlpha(0);
 //        status_bar_fix.setAlpha(0);
 //        titleBar_title.setText("标题栏透明度(0%)");

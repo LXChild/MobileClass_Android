@@ -10,8 +10,16 @@ public class ClassBean {
     private int mId;
     private String mName;
     private String mTeacher;
-    private Date mTime;
+    private String mTime;
     private String mRoom;
+
+    public ClassBean(int id, String name, String teacher, String time, String room) {
+        mId = id;
+        mName = name;
+        mTeacher = teacher;
+        mTime = time;
+        mRoom = room;
+    }
 
     public int getId() {
         return mId;
@@ -37,11 +45,11 @@ public class ClassBean {
         mTeacher = teacher;
     }
 
-    public Date getTime() {
+    public String getTime() {
         return mTime;
     }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         mTime = time;
     }
 

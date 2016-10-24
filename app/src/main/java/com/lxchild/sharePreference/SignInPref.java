@@ -24,7 +24,7 @@ public class SignInPref{
         getPreference(context).edit().putBoolean(KEY_IS_SIGN_IN, false).apply();
     }
 
-    public static boolean isIsSignIn(Context context) {
+    public static boolean isSignIn(Context context) {
         return getPreference(context).getBoolean(KEY_IS_SIGN_IN, false);
     }
 }

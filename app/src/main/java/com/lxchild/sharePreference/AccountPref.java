@@ -3,6 +3,8 @@ package com.lxchild.sharePreference;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.lxchild.bean.UserBean;
+
 /**
  * Created by LXChild on 16/10/2016.
  */
@@ -28,5 +30,9 @@ public class AccountPref {
     }
     public static String getPassword(Context context) {
         return getPreference(context).getString(KEY_USER_PWD, "");
+    }
+
+    public static UserBean getSignInUser(Context context) {
+        return new UserBean(getUserName(context), getPassword(context));
     }
 }
