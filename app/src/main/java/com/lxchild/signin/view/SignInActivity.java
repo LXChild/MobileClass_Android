@@ -29,7 +29,6 @@ import com.lxchild.mobileclass.R;
 import com.lxchild.sharePreference.SignInPref;
 import com.lxchild.signin.presenter.SignInPresenter;
 import com.lxchild.utils.NetworkUtil;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
 import java.util.Map;
@@ -128,7 +127,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
 
         mSignInPresenter = new SignInPresenter(this, this);
         mSignInPresenter.getAgnomenCode();
-        mSignInPresenter.loadUser();
+        mSignInPresenter.loadAcount();
     }
 
     /**
@@ -190,31 +189,33 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
         switch (msg.what) {
             case 0x01:
                 if (msg.obj == null) {
-                    Toast.makeText(this, "get agnomen code failed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.get_agnomen_failed), Toast.LENGTH_SHORT).show();
                     return;
                 }
                 bt_agnomen.setBackground(new BitmapDrawable(null, (String) msg.obj));
                 break;
             case 0x02:
-                if (msg.obj == null) {
-                    Toast.makeText(this, "sign in failed!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Logger.d(toShow((List<Map<String, String>>) msg.obj));
-                SignInPref.setAlreadySignIn(this);
-                MainActivity.launch(this);
+                Toast.makeText(this, getString(R.string.sign_in_failed), Toast.LENGTH_SHORT).show();
                 break;
+            case 0x03:
+                Toast.makeText(this, getString(R.string.wrong_agnomen), Toast.LENGTH_SHORT).show();
+                break;
+            case 0x04:
+                // Logger.d(toShow((List<Map<String, String>>) msg.obj));
+                SignInPref.setAlreadySignIn(this);
+                Toast.makeText(this, getString(R.string.sign_in_successed), Toast.LENGTH_SHORT).show();
+                MainActivity.launch(this);
             default:
                 break;
         }
 
     }
 
-    private StringBuilder toShow(List<Map<String, String>> scheduleList){
+    private StringBuilder toShow(List<Map<String, String>> scheduleList) {
         StringBuilder sb = new StringBuilder();
-        for(Map<String,String> map:scheduleList){
-            for(String key : map.keySet()) {
-                if(!"".equals(map.get(key))){
+        for (Map<String, String> map : scheduleList) {
+            for (String key : map.keySet()) {
+                if (!"".equals(map.get(key))) {
                     sb.append(key).append("----").append(map.get(key)).append("\n");
                 }
             }
@@ -228,8 +229,8 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
         switch (v.getId()) {
             case R.id.login:  //登陆
                 showLoading();
-                mSignInPresenter.saveUser(getUserName(), getPassword());
-                mSignInPresenter.verifyUser(getUserName(), getPassword(), et_agnomen.getText().toString().trim());
+                mSignInPresenter.saveAccount(getUserID(), getPassword());
+                mSignInPresenter.verifyAccount(getUserID(), getPassword(), et_agnomen.getText().toString().trim());
                 break;
             case R.id.login_error: //无法登陆(忘记密码了吧)
                 // TODO go to forget password activity
@@ -264,6 +265,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
                 et_agnomen.setText("");
                 break;
             case R.id.bt_agnomen:
+                showLoading();
                 mSignInPresenter.getAgnomenCode();
                 break;
         }
@@ -283,12 +285,12 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     }
 
     @Override
-    public String getUserName() {
+    public String getUserID() {
         return et_name.getText().toString().trim();
     }
 
     @Override
-    public void setUserName(String userName) {
+    public void setUserID(String userName) {
         et_name.setText(userName);
     }
 

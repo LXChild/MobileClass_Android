@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/grey">
+    android:background="@color/md_grey_300">
 
     <LinearLayout
         android:id="@+id/account_view"
@@ -15,7 +15,7 @@
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginBottom="@dimen/dimen_10"
         android:padding="@dimen/dimen_10"
-        android:background="@color/white">
+        android:background="@color/md_white_1000">
 
         <ImageView
             android:id="@+id/user_icon"
@@ -28,7 +28,8 @@
             android:id="@+id/username"
             android:layout_marginLeft="@dimen/dimen_10"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/md_grey_800"/>
 
     </LinearLayout>
 
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="@color/white">
+        android:background="@color/md_white_1000">
 
         <TextView
             android:id="@+id/history"
@@ -46,7 +47,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dimen_10"
             android:textSize="@dimen/text_size_14"
-            android:text="Browsing History"/>
+            android:text="Browsing History"
+            android:textColor="@color/md_grey_800"/>
 
     </LinearLayout>
 
@@ -56,7 +58,7 @@
         android:layout_marginTop="@dimen/dimen_10"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="@color/white">
+        android:background="@color/md_white_1000">
 
         <TextView
             android:id="@+id/share_app"
@@ -66,14 +68,14 @@
             android:paddingLeft="@dimen/dimen_10"
             android:textSize="@dimen/text_size_14"
             android:text="Share this App"
-            />
+            android:textColor="@color/md_grey_800"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/dimen_10"
             android:layout_marginRight="@dimen/dimen_10"
-            android:background="@color/grey"/>
+            android:background="@color/md_grey_300"/>
 
         <TextView
             android:id="@+id/feedback"
@@ -83,7 +85,7 @@
             android:paddingLeft="@dimen/dimen_10"
             android:textSize="@dimen/text_size_14"
             android:text="Feedback"
-            />
+            android:textColor="@color/md_grey_800"/>
 
     </LinearLayout>
 
@@ -94,7 +96,7 @@
         android:layout_marginTop="@dimen/dimen_10"
         android:orientation="vertical"
         android:gravity="center_vertical"
-        android:background="@color/white">
+        android:background="@color/md_white_1000">
 
         <TextView
             android:id="@+id/settings"
@@ -103,8 +105,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dimen_10"
             android:textSize="@dimen/text_size_14"
-            android:text="Settings"
-            />
+            android:textColor="@color/md_grey_800"
+            android:text="Settings"/>
 
     </LinearLayout>
 </LinearLayout>

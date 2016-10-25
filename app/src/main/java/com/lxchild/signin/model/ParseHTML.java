@@ -40,6 +40,22 @@ public class ParseHTML {
         return scheduilLst;
     }
 
+    public static String getUserName(String str) {
+        String userName = null;
+        try {
+            Document doc = Jsoup.parse(str);
+            Elements datas = doc.getElementsByTag("table");
+            Element data = datas.get(0);
+            Elements trs = data.getElementsByTag("tr");
+            Elements tds = trs.get(1).getElementsByTag("td");
+            String text = tds.get(0).getElementsByTag("tr").get(0).text();
+            userName = text.split(" ")[0].split(":")[1].split("学")[0];
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userName;
+    }
+
     /**
      * 数据封装
      */

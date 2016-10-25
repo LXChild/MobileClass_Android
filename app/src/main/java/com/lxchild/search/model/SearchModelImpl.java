@@ -45,7 +45,7 @@ public class SearchModelImpl extends Observable implements ISearchModel {
         new Thread() {
             @Override
             public void run() {
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < 200; i++) {
                     try {
                         classBeen.add(new ClassBean(i, "name" + i, "teacher wang", "10:00 - 11:00", "1210"));
                     } catch (Exception e) {
@@ -61,5 +61,19 @@ public class SearchModelImpl extends Observable implements ISearchModel {
     @Override
     public void searchData(String key) {
         // TODO search data
+        new Thread() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 200; i++) {
+                    try {
+                        classBeen.add(new ClassBean(i, "name" + i, "teacher wang", "10:00 - 11:00", "1210"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                mHandler.sendEmptyMessage(0x01);
+                super.run();
+            }
+        }.start();
     }
 }

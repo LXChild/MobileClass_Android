@@ -4,22 +4,22 @@ package com.lxchild.bean;
  * Created by LXChild on 22/10/2016.
  */
 
-public class UserBean {
+public class AccountBean {
 
-    public UserBean(String name, String password) {
-        mName = name;
+    private String mID;
+    private String mPassword;
+
+    public AccountBean(String id, String password) {
+        mID = id;
         mPassword = password;
     }
 
-    private String mName;
-    private String mPassword;
-
-    public String getName() {
-        return mName;
+    public String getID() {
+        return mID;
     }
 
-    public void setName(String name) {
-        mName = name;
+    public void setID(String name) {
+        mID = name;
     }
 
     public String getPassword() {

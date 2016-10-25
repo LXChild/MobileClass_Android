@@ -2,9 +2,9 @@ package com.lxchild.signin.presenter;
 
 import android.content.Context;
 
-import com.lxchild.bean.UserBean;
+import com.lxchild.bean.AccountBean;
 import com.lxchild.signin.model.ISignInModel;
-import com.lxchild.signin.model.SignInModel;
+import com.lxchild.signin.model.SignInModelImpl;
 import com.lxchild.signin.view.ISignInView;
 
 import java.util.Observable;
@@ -20,28 +20,28 @@ public class SignInPresenter {
 
     public SignInPresenter(Context context, ISignInView view) {
         mSignInView = view;
-        mSignInModel = new SignInModel(context);
+        mSignInModel = new SignInModelImpl(context);
         Observable observable = (Observable) mSignInModel;
         observable.addObserver((Observer) mSignInView);
     }
 
-    public void saveUser(String userName, String password) {
-        mSignInModel.setUserName(userName);
+    public void saveAccount(String userID, String password) {
+        mSignInModel.setUserID(userID);
         mSignInModel.setPassword(password);
     }
 
-    public void loadUser() {
-        UserBean user = mSignInModel.load();
-        mSignInView.setUserName(user.getName());//通过调用IUserView的方法来更新显示
-        mSignInView.setPassword(user.getPassword());
+    public void loadAcount() {
+        AccountBean account = mSignInModel.loadAccount();
+        mSignInView.setUserID(account.getID());// 通过调用IUserView的方法来更新显示
+        mSignInView.setPassword(account.getPassword());
     }
 
     public void getAgnomenCode() {
         mSignInModel.getAgnomenCode();
     }
 
-    public void verifyUser(String userName, String password, String agnomen) {
-        saveUser(userName, password);
-        mSignInModel.verifyUser(userName, password, agnomen);
+    public void verifyAccount(String userID, String password, String agnomen) {
+        saveAccount(userID, password);
+        mSignInModel.verifyAccount(userID, password, agnomen);
     }
 }

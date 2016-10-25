@@ -36,6 +36,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name="com.lxchild.signin.view.SignInActivity"
+                  android:launchMode="singleTask"
                   android:screenOrientation="portrait"/>
         <activity android:name="com.lxchild.search.view.SearchActivity"
                   android:screenOrientation="portrait"

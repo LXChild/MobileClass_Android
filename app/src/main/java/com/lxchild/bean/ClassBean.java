@@ -1,7 +1,5 @@
 package com.lxchild.bean;
 
-import java.util.Date;
-
 /**
  * Created by LXChild on 22/10/2016.
  */

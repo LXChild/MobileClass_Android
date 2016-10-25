@@ -3,17 +3,15 @@ package com.lxchild.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lxchild.bean.UserBean;
 import com.lxchild.mobileclass.R;
-import com.lxchild.sharePreference.AccountPref;
 import com.lxchild.sharePreference.SignInPref;
+import com.lxchild.signin.view.SignInActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,8 +34,6 @@ public class MineFragment extends Fragment {
         View contentView = inflater.inflate(R.layout.fragment_mine, container, false);
         ButterKnife.bind(this, contentView);
 
-        getActivity().setTitle(R.string.tab_classes);
-
         return contentView;
     }
 
@@ -49,9 +45,9 @@ public class MineFragment extends Fragment {
 
     private void updateUser() {
         if (SignInPref.isSignIn(getContext())) {
-            UserBean user = AccountPref.getSignInUser(getContext());
+            String userName = SignInPref.getUserName(getContext());
             // TODO load user icon
-            String displayName = TextUtils.isEmpty(user.getName()) ? getString(R.string.please_sign_in) : user.getName();
+            String displayName = userName == null ? getString(R.string.please_sign_in) : userName;
             mUserName.setText(displayName);
         }
         else {
@@ -84,6 +80,9 @@ public class MineFragment extends Fragment {
 
             case R.id.settings:
  //               SettingsActivity.launch(getActivity());
+                SignInPref.setAlreadySignOut(getContext());
+                SignInActivity.launch(getContext());
+                getActivity().finish();
                 break;
         }
     }

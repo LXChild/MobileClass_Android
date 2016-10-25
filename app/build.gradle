@@ -62,16 +62,15 @@ dependencies {
     // Jsoup
     // https://github.com/jhy/jsoup
     compile 'org.jsoup:jsoup:1.9.2'
+    // flexibledivider
+    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+
     // recyclerview
     compile 'com.android.support:recyclerview-v7:25.0.0'
     // cardview
     compile 'com.android.support:cardview-v7:25.0.0'
     // design
     compile 'com.android.support:design:25.0.0'
-    // flexibledivider
-    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
-
-
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:support-v4:25.0.0'
     testCompile 'junit:junit:4.12'

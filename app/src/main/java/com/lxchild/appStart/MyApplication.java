@@ -75,7 +75,7 @@ public class MyApplication extends Application {
     /**
      * 结束所有Activity
      */
-    public void finishAllActivity() {
+    private void finishAllActivity() {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();

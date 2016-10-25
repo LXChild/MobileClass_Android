@@ -5,8 +5,8 @@ package com.lxchild.signin.view;
  */
 
 public interface ISignInView {
-    String getUserName();
-    void setUserName(String userName);
+    String getUserID();
+    void setUserID(String userName);
     String getPassword();
     void setPassword(String password);
 }
