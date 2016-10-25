@@ -7,9 +7,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 
-public class NetworkUtil {
+public class NetworkUtils {
 
-    private NetworkUtil() {
+    private NetworkUtils() {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 

@@ -3,6 +3,8 @@ package com.lxchild.appStart;
 import android.app.Activity;
 import android.app.Application;
 
+import com.avos.avoscloud.AVOSCloud;
+
 import java.util.Stack;
 
 /**
@@ -18,7 +20,13 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         singleton = this;
+        InitializeInMainThread();
         InitializeService.start(this);
+    }
+
+    private void InitializeInMainThread() {
+        // 初始化LeanCloud API
+        AVOSCloud.initialize(this, "YebDfOq0GeDFvHIQqtVoHIKh-gzGzoHsz", "WYlONH9eCNC989qfWp9db5On");
     }
 
     // Returns the application instance
@@ -76,7 +84,7 @@ public class MyApplication extends Application {
      * 结束所有Activity
      */
     private void finishAllActivity() {
-        for (int i = 0, size = activityStack.size(); i < size; i++) {
+        for (int i = 0; i < activityStack.size(); i++) {
             if (null != activityStack.get(i)) {
                 activityStack.get(i).finish();
             }
@@ -87,9 +95,11 @@ public class MyApplication extends Application {
     /**
      * 退出应用程序
      */
-    public void AppExit() {
+    public void appExit() {
         try {
             finishAllActivity();
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.gc();
         } catch (Exception e) {
             e.printStackTrace();
         }

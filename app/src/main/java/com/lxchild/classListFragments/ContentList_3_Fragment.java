@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lxchild.mobileclass.R;
-import com.lxchild.utils.GenerateColorUtil;
+import com.lxchild.utils.GenerateColorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class ContentList_3_Fragment extends HeaderViewPagerFragment {
                 ViewGroup.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
                 itemView.setLayoutParams(params);
                 itemView.setText(strings.get(position));
-                itemView.setBackgroundColor(GenerateColorUtil.generateBeautifulColor());
+                itemView.setBackgroundColor(GenerateColorUtils.generateBeautifulColor());
             }
         }
     }

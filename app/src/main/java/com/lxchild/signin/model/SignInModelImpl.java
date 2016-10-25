@@ -6,6 +6,8 @@ import android.os.Message;
 import com.lxchild.bean.AccountBean;
 import com.lxchild.sharePreference.AccountPref;
 import com.lxchild.sharePreference.SignInPref;
+import com.lxchild.utils.AppUtils;
+import com.lxchild.utils.SDCardUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.FileCallback;
 import com.lzy.okgo.callback.StringCallback;
@@ -29,6 +31,7 @@ public class SignInModelImpl extends Observable implements ISignInModel {
     private final String mApplicant = "ACTIONQUERYSTUDENTSCHEDULEBYSELF";
 
     private Context mContext;
+
     public SignInModelImpl(Context context) {
         super();
         this.mContext = context;
@@ -54,8 +57,11 @@ public class SignInModelImpl extends Observable implements ISignInModel {
      * 使用get方式获取附加码图片并存储到本地目录
      * */
     public void getAgnomenCode() {
+        final String mPath = SDCardUtils.getSDCardPath() + "/" + AppUtils.getAppName(mContext) + "/Agnomen/";
+        final String mFileName = "agnomen";
+        final String mFileNameSuffix = ".jpeg";
         OkGo.get(mAgnomenCodeUrl)
-                .execute(new FileCallback(System.currentTimeMillis() + ".jpeg") {
+                .execute(new FileCallback(mPath, mFileName + System.currentTimeMillis() + mFileNameSuffix) {
                     @Override
                     public void onSuccess(File file, Call call, Response response) {
                         setChanged();

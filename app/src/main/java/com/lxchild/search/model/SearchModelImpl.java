@@ -19,7 +19,7 @@ public class SearchModelImpl extends Observable implements ISearchModel {
     private static class MyHandler extends Handler {
         private WeakReference<SearchModelImpl> activityWeakReference;
 
-        public MyHandler(SearchModelImpl activity) {
+        MyHandler(SearchModelImpl activity) {
             activityWeakReference = new WeakReference<>(activity);
         }
 

@@ -41,7 +41,12 @@ public class InitializeService extends IntentService {
 
     private void performInit() {
         long time = System.currentTimeMillis();
+        // 初始化异常处理
+        CrashHanlder crashHanlder = CrashHanlder.getInstance();
+        crashHanlder.init(this);
+        // 初始化Fresco
         Fresco.initialize(this);
+        // 初始化OkGo
         OkGo.init(getApplication());
         OkGo.getInstance().setCacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST) // 先使用缓存，不管是否存在，仍然请求网络 CacheMode.FIRST_CACHE_THEN_REQUEST
                 .setCacheTime(24 * 60 * 60 * 1000)  // 设置Cache时间为1天

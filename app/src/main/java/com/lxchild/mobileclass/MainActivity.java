@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVAnalytics;
 import com.lxchild.appStart.MyApplication;
 import com.lxchild.base.BaseExitActivity;
 import com.lxchild.fragment.ClassListFragment;
@@ -42,6 +43,7 @@ public class MainActivity extends BaseExitActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AVAnalytics.trackAppOpened(getIntent());
         initView();
     }
 
@@ -144,7 +146,7 @@ public class MainActivity extends BaseExitActivity {
     public void onBackPressed() {
         // finish while click back key 2 times during 1s.
         if ((System.currentTimeMillis() - mLastBackTime) < 1000) {
-            MyApplication.getInstance().AppExit();
+            MyApplication.getInstance().appExit();
         } else {
             mLastBackTime = System.currentTimeMillis();
             Toast.makeText(this, R.string.exit_click_back_again, Toast.LENGTH_SHORT).show();
