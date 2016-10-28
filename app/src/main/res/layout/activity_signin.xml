@@ -12,14 +12,14 @@
         android:gravity="center">
 
         <FrameLayout
-            android:id="@+id/username_layout"
+            android:id="@+id/userid_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="55dp"
             android:gravity="center">
 
             <EditText
-                android:id="@+id/et_username"
+                android:id="@+id/et_userid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
@@ -50,7 +50,7 @@
                 android:visibility="invisible"/>
 
             <Button
-                android:id="@+id/bt_username_clear"
+                android:id="@+id/bt_userid_clear"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
                 android:layout_gravity="right|center_vertical"
@@ -64,7 +64,7 @@
             android:id="@+id/usercode_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/username_layout"
+            android:layout_below="@id/userid_layout"
             android:layout_marginTop="6dp"
             android:gravity="center">
 
@@ -115,6 +115,7 @@
                 android:id="@+id/et_agnomen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:maxLength="20"
                 android:paddingLeft="55dp"
                 android:paddingRight="60dp">

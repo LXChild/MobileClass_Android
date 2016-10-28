@@ -1,12 +1,11 @@
 package com.lxchild.appStart;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Looper;
+import android.widget.Toast;
 
 import com.lxchild.utils.AppUtils;
 import com.lxchild.utils.SDCardUtils;
@@ -60,9 +59,24 @@ public class CrashHanlder implements Thread.UncaughtExceptionHandler {
     public void uncaughtException(Thread t, Throwable e) {
         e.printStackTrace();
         // 如果系统提供了默认的异常处理器，则交给系统去结束程序，否则就由自己结束自己
-        if (mDefaultCrashHandler != null && !handleException(e)) {
+//        if (mDefaultCrashHandler != null && !handleException(e)) {
             mDefaultCrashHandler.uncaughtException(t, e);
-        }
+ //       }
+//        try{
+//            Thread.sleep(1500);
+//        }catch (InterruptedException ex){
+//            Logger.e("error : ", ex);
+//        }
+//        // 重启程序
+//        Intent intent = new Intent(mContext.get(), SplashActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.putExtra("crash", true);
+//
+//        PendingIntent restartIntent = PendingIntent.getActivity(mContext.get(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
+//
+//        AlarmManager mgr = (AlarmManager) mContext.get().getSystemService(Context.ALARM_SERVICE);
+//        mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
+//        MyApplication.getInstance().appExit();
     }
 
     private void dumpExceptionToSDCard(Throwable e) {
@@ -139,21 +153,18 @@ public class CrashHanlder implements Thread.UncaughtExceptionHandler {
         if (e == null) {
             return false;
         } else {
+            new Thread() {
+                @Override
+                public void run() {
+                    Looper.prepare();
+                    Toast.makeText(mContext.get(), "应用异常退出，即将重启", Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }.start();
             // 导出异常信息到SD卡中
             dumpExceptionToSDCard(e);
             // 这里可以上传异常信息到服务器，便于开发人员分析日志从而解决BUG
             uploadExceptionToServer();
-
-            // 重启程序
-            Intent intent = new Intent(mContext.get(), SplashActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.putExtra("crash", true);
-
-            PendingIntent restartIntent = PendingIntent.getActivity(mContext.get(), 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
-            AlarmManager mgr = (AlarmManager) mContext.get().getSystemService(Context.ALARM_SERVICE);
-            mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, restartIntent); // 1秒钟后重启应用
-            MyApplication.getInstance().appExit();
             return true;
         }
     }

@@ -20,5 +20,27 @@
 
     <!--MineFragment-->
     <string name="please_sign_in">Please sign in</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="user_identity_admin">Adminstrator</string>
+    <string name="user_identity_teacher">Teacher</string>
+    <string name="user_identity_student">Student</string>
+    <string name="mine_detail_request_access">申请权限</string>
+    <string name="request_access_et_id_hint">请输入你的学号／工号</string>
+    <string name="request_access_et_name_hint">请输入你的姓名</string>
+    <string name="request_access_btn_selectimg_text">点击上传证件照片</string>
+    <string name="rquest_access_btn_submit_text">提交</string>
 
 </resources>

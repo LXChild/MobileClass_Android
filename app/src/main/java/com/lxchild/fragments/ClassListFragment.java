@@ -1,4 +1,4 @@
-package com.lxchild.fragment;
+package com.lxchild.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

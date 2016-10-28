@@ -5,7 +5,7 @@ import android.os.Message;
 
 import com.lxchild.bean.AccountBean;
 import com.lxchild.sharePreference.AccountPref;
-import com.lxchild.sharePreference.SignInPref;
+import com.lxchild.sharePreference.UserBeanPref;
 import com.lxchild.utils.AppUtils;
 import com.lxchild.utils.SDCardUtils;
 import com.lzy.okgo.OkGo;
@@ -132,6 +132,6 @@ public class SignInModelImpl extends Observable implements ISignInModel {
     }
 
     private void setUserName(String userName) {
-        SignInPref.setUserName(mContext, userName);
+        UserBeanPref.setUserName(mContext, userName);
     }
 }

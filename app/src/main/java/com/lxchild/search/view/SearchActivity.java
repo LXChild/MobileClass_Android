@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,8 +56,6 @@ public class SearchActivity extends BaseLoadingActivity implements ISearchView<A
     private void initView() {
         ButterKnife.bind(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         setTitle(R.string.menu_search);
 
         mSearchView.setVoiceSearch(false);
@@ -94,7 +91,7 @@ public class SearchActivity extends BaseLoadingActivity implements ISearchView<A
     @Override
     public void update(Observable o, Object arg) {
         if (arg != null) {
-            showSearchResult((ArrayList<ClassBean>)arg);
+            showSearchResult((ArrayList<ClassBean>) arg);
         }
     }
 

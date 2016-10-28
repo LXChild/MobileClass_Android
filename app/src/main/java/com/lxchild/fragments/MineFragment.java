@@ -1,4 +1,4 @@
-package com.lxchild.fragment;
+package com.lxchild.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lxchild.classTest.singleChoice.view.ClassTestActivity;
+import com.lxchild.mine.MineDetailActivity;
 import com.lxchild.mobileclass.R;
 import com.lxchild.sharePreference.SignInPref;
+import com.lxchild.sharePreference.UserBeanPref;
 import com.lxchild.signin.view.SignInActivity;
 
 import butterknife.BindView;
@@ -45,7 +48,7 @@ public class MineFragment extends Fragment {
 
     private void updateUser() {
         if (SignInPref.isSignIn(getContext())) {
-            String userName = SignInPref.getUserName(getContext());
+            String userName = UserBeanPref.getUserName(getContext());
             // TODO load user icon
             String displayName = userName == null ? getString(R.string.please_sign_in) : userName;
             mUserName.setText(displayName);
@@ -55,21 +58,17 @@ public class MineFragment extends Fragment {
         }
     }
 
-    @OnClick({R.id.account_view, R.id.history, R.id.share_app, R.id.feedback, R.id.settings})
+    @OnClick({R.id.account_view, R.id.tv_mine_paper, R.id.share_app, R.id.feedback, R.id.settings})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.account_view:
-//                if (AccountPref.isLogon(getContext())) {
-//                    UserActivity.launch(getActivity(), AccountPref.getLogonUser(getActivity()));
-//                }
-//                else {
-//                    LoginActivity.launch(getActivity());
-//                }
+                if (SignInPref.isSignIn(getContext())) {
+                    MineDetailActivity.launch(getActivity(), UserBeanPref.getUserName(getContext()));
+                }
                 break;
-            case R.id.history:
-                // TODO
+            case R.id.tv_mine_paper:
+                ClassTestActivity.launch(getContext());
                 break;
-
             case R.id.share_app:
  //               SharePlatform.share(getActivity());
                 break;

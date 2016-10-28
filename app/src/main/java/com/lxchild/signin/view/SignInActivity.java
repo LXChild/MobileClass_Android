@@ -43,8 +43,8 @@ import butterknife.ButterKnife;
  */
 
 public class SignInActivity extends BaseLoadingActivity implements ISignInView, View.OnClickListener, View.OnLongClickListener, Observer {
-    @BindView(R.id.et_username)
-    EditText et_name;
+    @BindView(R.id.et_userid)
+    EditText et_userid;
     @BindView(R.id.et_password)
     EditText et_pass;
     @BindView(R.id.et_agnomen)
@@ -70,8 +70,8 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     public final static int PASS_ERROR = 0x03;      //注册完毕了
     public final static int NAME_ERROR = 0x04;      //注册完毕了
 
-    @BindView(R.id.bt_username_clear)
-    Button bt_username_clear;
+    @BindView(R.id.bt_userid_clear)
+    Button bt_userid_clear;
 
     @BindView(R.id.bt_pwd_clear)
     Button bt_pwd_clear;
@@ -83,7 +83,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     @BindView(R.id.bt_agnomen)
     Button bt_agnomen;
 
-    private TextWatcher username_watcher;
+    private TextWatcher userid_watcher;
     private TextWatcher password_watcher;
     private TextWatcher agnomen_watcher;
 
@@ -104,7 +104,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     private void initView() {
         ButterKnife.bind(this);
 
-        bt_username_clear.setOnClickListener(this);
+        bt_userid_clear.setOnClickListener(this);
 
         bt_pwd_clear.setOnClickListener(this);
         bt_pwd_eye.setOnClickListener(this);
@@ -114,7 +114,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
 
         initWatcher();
 
-        et_name.addTextChangedListener(username_watcher);
+        et_userid.addTextChangedListener(userid_watcher);
         et_pass.addTextChangedListener(password_watcher);
         et_agnomen.addTextChangedListener(agnomen_watcher);
 
@@ -134,7 +134,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
      * 手机号，密码输入控件公用这一个watcher
      */
     private void initWatcher() {
-        username_watcher = new TextWatcher() {
+        userid_watcher = new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
 
@@ -144,9 +144,9 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
             public void afterTextChanged(Editable s) {
                 et_pass.setText("");
                 if (s.toString().length() > 0) {
-                    bt_username_clear.setVisibility(View.VISIBLE);
+                    bt_userid_clear.setVisibility(View.VISIBLE);
                 } else {
-                    bt_username_clear.setVisibility(View.INVISIBLE);
+                    bt_userid_clear.setVisibility(View.INVISIBLE);
                 }
             }
         };
@@ -244,8 +244,8 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
                 }
                 SERVER_FLAG++;
                 break;
-            case R.id.bt_username_clear:
-                et_name.setText("");
+            case R.id.bt_userid_clear:
+                et_userid.setText("");
                 et_pass.setText("");
                 break;
             case R.id.bt_pwd_clear:
@@ -286,12 +286,12 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
 
     @Override
     public String getUserID() {
-        return et_name.getText().toString().trim();
+        return et_userid.getText().toString().trim();
     }
 
     @Override
-    public void setUserID(String userName) {
-        et_name.setText(userName);
+    public void setUserID(String userID) {
+        et_userid.setText(userID);
     }
 
     @Override

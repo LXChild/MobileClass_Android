@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/md_grey_300">
 
@@ -17,12 +18,17 @@
         android:padding="@dimen/dimen_10"
         android:background="@color/md_white_1000">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/user_icon"
             android:layout_width="@dimen/dimen_64"
             android:layout_height="@dimen/dimen_64"
             android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"/>
+            fresco:roundAsCircle="true"
+            fresco:placeholderImage="@drawable/hanxue"
+            fresco:failureImage="@mipmap/ic_launcher"
+            fresco:retryImage="@mipmap/ic_launcher"
+            fresco:viewAspectRatio="1"
+            fresco:fadeDuration="500"/>
 
         <TextView
             android:id="@+id/username"
@@ -41,13 +47,13 @@
         android:background="@color/md_white_1000">
 
         <TextView
-            android:id="@+id/history"
+            android:id="@+id/tv_mine_paper"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_60"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dimen_10"
             android:textSize="@dimen/text_size_14"
-            android:text="Browsing History"
+            android:text="编辑试卷"
             android:textColor="@color/md_grey_800"/>
 
     </LinearLayout>
