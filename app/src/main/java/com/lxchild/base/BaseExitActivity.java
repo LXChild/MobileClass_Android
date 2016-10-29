@@ -3,6 +3,7 @@ package com.lxchild.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 
 import com.lxchild.appStart.MyApplication;
 
@@ -32,6 +33,15 @@ public abstract class BaseExitActivity extends AppCompatActivity {
     }
 
     protected void doNext(int requestCode, int[] grantResults){}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onDestroy() {
