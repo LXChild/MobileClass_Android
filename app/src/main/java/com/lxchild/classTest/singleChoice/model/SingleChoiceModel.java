@@ -3,18 +3,23 @@ package com.lxchild.classTest.singleChoice.model;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.lxchild.DataOperatorMVP.model.IDataOperatorModel;
 import com.lxchild.bean.SingleChoiceBean;
+import com.lxchild.callBack.IListOperatorCallBack;
 import com.lxchild.database.SingleChoiceTable;
 import com.orhanobut.logger.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by LXChild on 28/10/2016.
  */
 
-public class SingleChoiceModelImpl implements ISingleChoiceModel {
+public class SingleChoiceModel implements IDataOperatorModel<SingleChoiceBean> {
     private SingleChoiceTable tb_singleChoice;
 
-    public SingleChoiceModelImpl(Context context) {
+    public SingleChoiceModel(Context context) {
         tb_singleChoice = new SingleChoiceTable(context);
     }
 
@@ -34,10 +39,12 @@ public class SingleChoiceModelImpl implements ISingleChoiceModel {
     }
 
     @Override
-    public void loadData() {
+    public void selectData(IListOperatorCallBack<SingleChoiceBean> callBack) {
 
         Cursor c = tb_singleChoice.select();
         if (c.getCount() != 0) {
+            List<SingleChoiceBean> list = new ArrayList<>();
+
             if (c.moveToFirst()) {
                 do {
                     String questionName = c.getString(c.getColumnIndex(SingleChoiceTable.column_question_name));
@@ -48,19 +55,20 @@ public class SingleChoiceModelImpl implements ISingleChoiceModel {
                     String answerR = c.getString(c.getColumnIndex(SingleChoiceTable.column_answer_r_name));
                     if (!questionName.trim().equals("")) {
                         SingleChoiceBean singleChoiceBean = new SingleChoiceBean(questionName, answerA, answerB, answerC, answerD, answerR);
+                        list.add(singleChoiceBean);
                         Logger.d(singleChoiceBean);
-//                        itemList.add(page);
 //                        adapter.notifyDataSetChanged();
                     }
 
                 } while (c.moveToNext());
             }
+            callBack.onSucceed(list);
         }
     }
 
     @Override
-    public int loadData(String filter) {
-        Cursor c = tb_singleChoice.selectWhere(filter);
+    public int selectData(int id) {
+        Cursor c = tb_singleChoice.selectWhere(id);
         if (c.getCount() != 0) {
             if (c.moveToFirst()) {
                 do {

@@ -10,16 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lxchild.base.BaseLoadingActivity;
+import com.lxchild.DataOperatorMVP.view.IDataOperatorView;
 import com.lxchild.bean.SingleChoiceBean;
 import com.lxchild.classTest.singleChoice.presenter.SingleChoicePresenter;
 import com.lxchild.mobileclass.R;
 import com.lxchild.utils.StringUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ClassTestActivity extends BaseLoadingActivity implements ISingleChoiceView {
+public class SingleChoiceActivity extends BaseLoadingActivity implements IDataOperatorView<SingleChoiceBean> {
 
 
     @BindView(R.id.activity_class_test)
@@ -44,7 +47,7 @@ public class ClassTestActivity extends BaseLoadingActivity implements ISingleCho
     private SingleChoicePresenter mPresenter;
 
     public static void launch(Context context) {
-        context.startActivity(new Intent(context, ClassTestActivity.class));
+        context.startActivity(new Intent(context, SingleChoiceActivity.class));
     }
 
     @Override
@@ -61,7 +64,7 @@ public class ClassTestActivity extends BaseLoadingActivity implements ISingleCho
         }
         setTitle("课堂测试");
 
-        mPresenter = new SingleChoicePresenter(this, this);
+        mPresenter = new SingleChoicePresenter(this);
     }
 
     @OnClick({R.id.btn_class_test_next, R.id.btn_class_test_complete})
@@ -73,7 +76,7 @@ public class ClassTestActivity extends BaseLoadingActivity implements ISingleCho
                     if (mPresenter.insertData(bean)) {
                        // Snackbar.make(rootLayout, "保存成功", Snackbar.LENGTH_SHORT).show();
                         Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
-                        setSingleChoice(null);
+                        setEditText("", "", "", "", "", "");
                     } else {
                         Toast.makeText(this, "保存失败，数据库中已存在该题", Toast.LENGTH_SHORT).show();
                     }
@@ -88,7 +91,6 @@ public class ClassTestActivity extends BaseLoadingActivity implements ISingleCho
         }
     }
 
-    @Override
     public SingleChoiceBean getSingleChoice() {
         if (StringUtils.isEmpty(mEtClassTestQusetion)) {
             mEtClassTestQusetion.setError("题目为空");
@@ -108,22 +110,27 @@ public class ClassTestActivity extends BaseLoadingActivity implements ISingleCho
                 mEtClassTestAr.getText().toString());
     }
 
+    public void setEditText(String question, String answer_a,
+                            String answer_b, String answer_c,
+                            String answer_d, String answer_r) {
+        mEtClassTestQusetion.setText(question);
+        mEtClassTestAa.setText(answer_a);
+        mEtClassTestAb.setText(answer_b);
+        mEtClassTestAc.setText(answer_c);
+        mEtClassTestAd.setText(answer_d);
+        mEtClassTestAr.setText(answer_r);
+    }
+
     @Override
-    public void setSingleChoice(SingleChoiceBean bean) {
-        if (bean == null) {
-            mEtClassTestQusetion.setText("");
-            mEtClassTestAa.setText("");
-            mEtClassTestAb.setText("");
-            mEtClassTestAc.setText("");
-            mEtClassTestAd.setText("");
-            mEtClassTestAr.setText("");
-            return;
-        }
-        mEtClassTestQusetion.setText(bean.getQuestion_name());
-        mEtClassTestAa.setText(bean.getAnswer_a());
-        mEtClassTestAb.setText(bean.getAnswer_b());
-        mEtClassTestAc.setText(bean.getAnswer_c());
-        mEtClassTestAd.setText(bean.getAnswer_d());
-        mEtClassTestAr.setText(bean.getAnswer_r());
+    public Context getContext() {
+        return this;
+    }
+
+    @Override
+    public void loadDataSucceed(List<SingleChoiceBean> beans) {
+    }
+
+    @Override
+    public void loadDataFailed(String result) {
     }
 }

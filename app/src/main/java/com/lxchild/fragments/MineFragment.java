@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lxchild.classTest.otherTopic.view.OtherTopicActivity;
+import com.lxchild.classTest.paperList.view.PaperListActivity;
 import com.lxchild.mine.MineDetailActivity;
 import com.lxchild.mobileclass.R;
 import com.lxchild.sharePreference.SignInPref;
@@ -67,7 +67,7 @@ public class MineFragment extends Fragment {
                 }
                 break;
             case R.id.tv_mine_paper:
-                OtherTopicActivity.launch(getContext());
+                PaperListActivity.launch(getContext());
                 break;
             case R.id.share_app:
  //               SharePlatform.share(getActivity());

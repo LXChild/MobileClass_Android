@@ -10,16 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.lxchild.base.BaseLoadingActivity;
+import com.lxchild.DataOperatorMVP.view.IDataOperatorView;
 import com.lxchild.bean.OtherTopicBean;
 import com.lxchild.classTest.otherTopic.presenter.OtherTopicPresenter;
 import com.lxchild.mobileclass.R;
 import com.lxchild.utils.StringUtils;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OtherTopicActivity extends BaseLoadingActivity implements IOtherTopicView {
+public class OtherTopicActivity extends BaseLoadingActivity implements IDataOperatorView<OtherTopicBean> {
 
     @BindView(R.id.et_other_topic_question)
     EditText mEtOtherTopicQuestion;
@@ -68,7 +71,7 @@ public class OtherTopicActivity extends BaseLoadingActivity implements IOtherTop
                 if (bean != null) {
                     if (mTopicPresenter.insertData(bean)) {
                         Toast.makeText(this, "保存成功", Toast.LENGTH_SHORT).show();
-                        setOtherTopic(null);
+                        setEditText("", "");
                     } else {
                         Toast.makeText(this, "保存失败，数据库中已存在该题", Toast.LENGTH_SHORT).show();
                     }
@@ -94,17 +97,27 @@ public class OtherTopicActivity extends BaseLoadingActivity implements IOtherTop
         return new OtherTopicBean(mEtOtherTopicQuestion.getText().toString(), mEtOtherTopicAnswer.getText().toString());
     }
 
+    private void setEditText(String question, String answer) {
+        mEtOtherTopicQuestion.setText(question);
+        mEtOtherTopicAnswer.setText(answer);
+    }
+
     @Override
     public Context getContext() {
         return this;
     }
 
     @Override
-    public void setOtherTopic(OtherTopicBean bean) {
+    public void loadDataSucceed(List<OtherTopicBean> bean) {
         if (bean == null) {
             return;
         }
-        mEtOtherTopicQuestion.setText(bean.getQuestion());
-        mEtOtherTopicAnswer.setText(bean.getAnswer());
+//        mEtOtherTopicQuestion.setText(bean.getQuestion());
+//        mEtOtherTopicAnswer.setText(bean.getAnswer());
+    }
+
+    @Override
+    public void loadDataFailed(String result) {
+
     }
 }

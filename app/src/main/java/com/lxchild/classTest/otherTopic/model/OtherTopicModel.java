@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.lxchild.bean.OtherTopicBean;
+import com.lxchild.callBack.IListOperatorCallBack;
 import com.lxchild.database.OtherTopicTable;
+import com.lxchild.DataOperatorMVP.model.IDataOperatorModel;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -14,10 +16,10 @@ import java.util.List;
  * Created by LXChild on 29/10/2016.
  */
 
-public class OtherTopicModelImpl implements IOtherTopicModel {
+public class OtherTopicModel implements IDataOperatorModel<OtherTopicBean> {
     private OtherTopicTable mOtherTopicTable;
 
-    public OtherTopicModelImpl(Context context) {
+    public OtherTopicModel(Context context) {
         mOtherTopicTable = new OtherTopicTable(context);
     }
 
@@ -37,7 +39,7 @@ public class OtherTopicModelImpl implements IOtherTopicModel {
     }
 
     @Override
-    public void selectData(ISelectDataCallBack callBack) {
+    public void selectData(IListOperatorCallBack<OtherTopicBean> callBack) {
         Cursor c = mOtherTopicTable.select();
         if (c.getCount() != 0) {
             List<OtherTopicBean> list = new ArrayList<>();
@@ -49,13 +51,11 @@ public class OtherTopicModelImpl implements IOtherTopicModel {
                         OtherTopicBean otherTopicBean = new OtherTopicBean(questionName, answer);
                         list.add(otherTopicBean);
                         Logger.d(otherTopicBean.getQuestion() + " , " + otherTopicBean.getAnswer());
-//                        itemList.add(page);
-//                        adapter.notifyDataSetChanged();
                     }
 
                 } while (c.moveToNext());
             }
-            callBack.onSuccessed(list);
+            callBack.onSucceed(list);
         }
     }
 

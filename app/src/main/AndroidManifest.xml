@@ -72,9 +72,11 @@
         </activity>
         <activity android:name="com.lxchild.mine.RequestAccessActivity">
         </activity>
-        <activity android:name="com.lxchild.classTest.singleChoice.view.ClassTestActivity">
+        <activity android:name="com.lxchild.classTest.singleChoice.view.SingleChoiceActivity">
         </activity>
         <activity android:name="com.lxchild.classTest.otherTopic.view.OtherTopicActivity">
+        </activity>
+        <activity android:name="com.lxchild.classTest.paperList.view.PaperListActivity">
         </activity>
     </application>
 

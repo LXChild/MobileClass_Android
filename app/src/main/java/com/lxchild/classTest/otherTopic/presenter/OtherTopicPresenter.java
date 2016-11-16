@@ -1,49 +1,18 @@
 package com.lxchild.classTest.otherTopic.presenter;
 
+import com.lxchild.DataOperatorMVP.presenter.DataOperatorPresenter;
+import com.lxchild.DataOperatorMVP.view.IDataOperatorView;
 import com.lxchild.bean.OtherTopicBean;
-import com.lxchild.classTest.otherTopic.model.IOtherTopicModel;
-import com.lxchild.classTest.otherTopic.model.ISelectDataCallBack;
-import com.lxchild.classTest.otherTopic.model.OtherTopicModelImpl;
-import com.lxchild.classTest.otherTopic.view.IOtherTopicView;
-
-import java.util.List;
+import com.lxchild.classTest.otherTopic.model.OtherTopicModel;
 
 /**
- * Created by LXChild on 29/10/2016.
+ * Created by LXChild on 06/11/2016.
  */
 
-public class OtherTopicPresenter {
+public class OtherTopicPresenter extends DataOperatorPresenter<OtherTopicBean> {
 
-    private IOtherTopicModel mOtherTopicModel;
-    private IOtherTopicView mOtherTopicView;
-
-    public OtherTopicPresenter(IOtherTopicView otherTopicView) {
-        mOtherTopicView = otherTopicView;
-        mOtherTopicModel = new OtherTopicModelImpl(mOtherTopicView.getContext());
-    }
-
-    public boolean insertData(OtherTopicBean bean) {
-        return mOtherTopicModel.insertData(bean);
-    }
-
-    public boolean deleteData(int id) {
-        return mOtherTopicModel.deleteData(id);
-    }
-
-    public boolean updateData(int id, OtherTopicBean bean) {
-        return mOtherTopicModel.updateData(id, bean);
-    }
-
-    public void selectData() {
-        mOtherTopicModel.selectData(new ISelectDataCallBack() {
-            @Override
-            public void onSuccessed(List<OtherTopicBean> list) {
-
-            }
-
-            @Override
-            public void onFailed(String result) {
-            }
-        });
+    public OtherTopicPresenter(IDataOperatorView dataOperatorView) {
+        super(dataOperatorView);
+        mIDataOperatorModel = new OtherTopicModel(dataOperatorView.getContext());
     }
 }

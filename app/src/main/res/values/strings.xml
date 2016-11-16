@@ -42,5 +42,14 @@
     <string name="request_access_et_name_hint">请输入你的姓名</string>
     <string name="request_access_btn_selectimg_text">点击上传证件照片</string>
     <string name="rquest_access_btn_submit_text">提交</string>
+    <string name="paper_list_get_data_failed">get data failed!</string>
+    <string name="option">Option</string>
+    <string name="layout_paper_edit_dialog_title_hint">请填写试卷标题</string>
+    <string name="layout_paper_edit_dialog_remark_hint">请填写试卷备注</string>
+    <string name="paper_list_activity_edit_dialog_title">添加</string>
+    <string name="paper__edit_dialog_positive_text">确认</string>
+    <string name="paper_edit_dialog_null_title">试卷标题不能为空</string>
+    <string name="paper_edit_dialog_negative_text">取消</string>
+    <string name="paper_edit_dialog_title_modify">修改</string>
 
 </resources>

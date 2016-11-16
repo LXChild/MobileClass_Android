@@ -9,7 +9,7 @@ import android.widget.EditText;
 public class StringUtils {
 
     public static boolean isEmpty(EditText et) {
-        return et.getText().toString().trim().equals("");
+        return (et == null) || (et.getText().toString().trim().equals(""));
     }
 
     public static boolean isValidAnswer(String s) {

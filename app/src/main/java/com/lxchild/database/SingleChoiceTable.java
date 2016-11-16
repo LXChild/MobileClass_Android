@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.lxchild.bean.SingleChoiceBean;
 
@@ -12,10 +11,9 @@ import com.lxchild.bean.SingleChoiceBean;
  * Created by LXChild on 28/10/2016.
  */
 
-public class SingleChoiceTable extends SQLiteOpenHelper {
+public class SingleChoiceTable extends TableHelper<SingleChoiceBean> {
 
-    private static final String db_name = "SingleChoiceDB";
-    private final String tb_name = "SingleChoiceTable";
+    private final String tb_name = "SingleChoice";
     public static final String column_question_name = "question";
     public static final String column_answer_a_name = "answerA";
     public static final String column_answer_b_name = "answerB";
@@ -24,16 +22,16 @@ public class SingleChoiceTable extends SQLiteOpenHelper {
     public static final String column_answer_r_name = "answerR";
     private final String createTable = "CREATE TABLE " + tb_name + " ("
             + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            + column_question_name + " TEXT DEFAULE \"\" UNIQUE, "
-            + column_answer_a_name + " TEXT DEFAULE \"\", "
-            + column_answer_b_name + " TEXT DEFAULE \"\", "
-            + column_answer_c_name + " TEXT DEFAULE \"\", "
-            + column_answer_d_name + " TEXT DEFAULE \"\", "
-            + column_answer_r_name + " TEXT DEFAULE \"\")";
+            + column_question_name + " TEXT DEFAULT \"\" UNIQUE, "
+            + column_answer_a_name + " TEXT DEFAULT \"\", "
+            + column_answer_b_name + " TEXT DEFAULT \"\", "
+            + column_answer_c_name + " TEXT DEFAULT \"\", "
+            + column_answer_d_name + " TEXT DEFAULT \"\", "
+            + column_answer_r_name + " TEXT DEFAULT \"\")";
     private final String dropTable = "DROP TABLE " + tb_name;
 
     public SingleChoiceTable(Context context) {
-        super(context, db_name, null, 1);
+        super(context);
     }
 
     @Override
@@ -52,6 +50,7 @@ public class SingleChoiceTable extends SQLiteOpenHelper {
      * @param bean 问题详情
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
+    @Override
     public long insert(SingleChoiceBean bean) {
         SQLiteDatabase db = getWritableDatabase();//获取可写SQLiteDatabase对象
         //ContentValues类似map，存入的是键值对
@@ -73,6 +72,7 @@ public class SingleChoiceTable extends SQLiteOpenHelper {
      *         otherwise. To remove all rows and get a count pass "1" as the
      *         whereClause.
      */
+    @Override
     public int delete(int _id) {
         SQLiteDatabase db = getWritableDatabase();
         String[] args = new String[]{String.valueOf(_id)};
@@ -86,6 +86,7 @@ public class SingleChoiceTable extends SQLiteOpenHelper {
      * @param bean 问题详情
      * @return the number of rows affected
      */
+    @Override
     public int update(int _id, SingleChoiceBean bean) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -104,6 +105,7 @@ public class SingleChoiceTable extends SQLiteOpenHelper {
      *
      * @return Cursor
      */
+    @Override
     public Cursor select() {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(tb_name, new String[]{"_id", column_question_name, column_answer_a_name, column_answer_b_name, column_answer_c_name, column_answer_d_name, column_answer_r_name},
@@ -112,9 +114,11 @@ public class SingleChoiceTable extends SQLiteOpenHelper {
     /**
      * 查询指定数据
      * */
-    public Cursor selectWhere(String filter) {
-        SQLiteDatabase db = getReadableDatabase();
-        return db.query(tb_name, new String[]{"_id", column_question_name, column_answer_a_name, column_answer_b_name, column_answer_c_name, column_answer_d_name, column_answer_r_name},
-                filter, null, null, null, "_id asc");
+    @Override
+    public Cursor selectWhere(int filter) {
+//        SQLiteDatabase db = getReadableDatabase();
+//        return db.query(tb_name, new String[]{"_id", column_question_name, column_answer_a_name, column_answer_b_name, column_answer_c_name, column_answer_d_name, column_answer_r_name},
+//                filter, null, null, null, "_id asc");
+        return null;
     }
 }
