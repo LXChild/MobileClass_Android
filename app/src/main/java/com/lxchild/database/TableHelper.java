@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by LXChild on 06/11/2016.
  */
 
-public abstract class TableHelper<T> extends SQLiteOpenHelper {
+abstract class TableHelper<T> extends SQLiteOpenHelper {
     private static final String DB_NAME = "MobileClass";
 
-    public TableHelper(Context context) {
+    TableHelper(Context context) {
         super(context, DB_NAME, null, 1);
     }
 

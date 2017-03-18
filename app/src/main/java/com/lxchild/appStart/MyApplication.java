@@ -27,6 +27,8 @@ public class MyApplication extends Application {
     private void InitializeInMainThread() {
         // 初始化LeanCloud API
         AVOSCloud.initialize(this, "YebDfOq0GeDFvHIQqtVoHIKh-gzGzoHsz", "WYlONH9eCNC989qfWp9db5On");
+        // 放在 SDK 初始化语句 AVOSCloud.initialize() 后面，只需要调用一次即可
+        AVOSCloud.setDebugLogEnabled(true);
     }
 
     // Returns the application instance

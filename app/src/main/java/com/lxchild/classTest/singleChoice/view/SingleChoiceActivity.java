@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.lxchild.dataMVP.IDataContract;
 import com.lxchild.base.BaseLoadingActivity;
-import com.lxchild.DataOperatorMVP.view.IDataOperatorView;
 import com.lxchild.bean.SingleChoiceBean;
 import com.lxchild.classTest.singleChoice.presenter.SingleChoicePresenter;
 import com.lxchild.mobileclass.R;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SingleChoiceActivity extends BaseLoadingActivity implements IDataOperatorView<SingleChoiceBean> {
+public class SingleChoiceActivity extends BaseLoadingActivity implements IDataContract.IDataView<SingleChoiceBean> {
 
 
     @BindView(R.id.activity_class_test)
@@ -44,7 +44,7 @@ public class SingleChoiceActivity extends BaseLoadingActivity implements IDataOp
     @BindView(R.id.btn_class_test_complete)
     Button mBtnClassTestComplete;
 
-    private SingleChoicePresenter mPresenter;
+    private IDataContract.IDataPresenter mPresenter;
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, SingleChoiceActivity.class));
@@ -63,8 +63,7 @@ public class SingleChoiceActivity extends BaseLoadingActivity implements IDataOp
             e.printStackTrace();
         }
         setTitle("课堂测试");
-
-        mPresenter = new SingleChoicePresenter(this);
+        new SingleChoicePresenter(this);
     }
 
     @OnClick({R.id.btn_class_test_next, R.id.btn_class_test_complete})
@@ -122,6 +121,15 @@ public class SingleChoiceActivity extends BaseLoadingActivity implements IDataOp
     }
 
     @Override
+    public void setLoadingIndicator(boolean active) {
+        if (active) {
+            showLoadingDialog();
+        } else {
+            dismissLoadingDialog();
+        }
+    }
+
+    @Override
     public Context getContext() {
         return this;
     }
@@ -132,5 +140,10 @@ public class SingleChoiceActivity extends BaseLoadingActivity implements IDataOp
 
     @Override
     public void loadDataFailed(String result) {
+    }
+
+    @Override
+    public void setPresenter(IDataContract.IDataPresenter presenter) {
+        this.mPresenter = presenter;
     }
 }

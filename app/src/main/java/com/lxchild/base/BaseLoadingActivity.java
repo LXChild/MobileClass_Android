@@ -16,11 +16,11 @@ public abstract class BaseLoadingActivity extends BaseExitActivity {
         super.onCreate(savedInstanceState);
     }
 
-    public void showLoading() {
+    public void showLoadingDialog() {
         LoadingDialog.show(this);
     }
 
-    public void dismissLoading() {
+    public void dismissLoadingDialog() {
         LoadingDialog.dismiss(this);
     }
 

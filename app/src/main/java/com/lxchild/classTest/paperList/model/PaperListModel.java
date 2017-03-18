@@ -3,10 +3,10 @@ package com.lxchild.classTest.paperList.model;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.lxchild.DataOperatorMVP.model.IDataOperatorModel;
 import com.lxchild.bean.PaperBean;
-import com.lxchild.callBack.IListOperatorCallBack;
-import com.lxchild.database.PaperListTable;
+import com.lxchild.callBack.ILoadDataCallBack;
+import com.lxchild.dataMVP.IDataContract;
+import com.lxchild.database.PaperTable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +15,13 @@ import java.util.List;
  * Created by LXChild on 06/11/2016.
  */
 
-public class PaperListModel implements IDataOperatorModel<PaperBean> {
+public class PaperListModel implements IDataContract.IDataModel<PaperBean> {
 
-    private PaperListTable mTable;
-    private List<PaperBean> list = new ArrayList<>();
+    private PaperTable mTable;
+    private List<PaperBean> list;
     public PaperListModel(Context context) {
-
-        mTable = new PaperListTable(context);
+        mTable = new PaperTable(context);
+        list = new ArrayList<>();
     }
 
     @Override
@@ -42,15 +42,15 @@ public class PaperListModel implements IDataOperatorModel<PaperBean> {
     }
 
     @Override
-    public void selectData(IListOperatorCallBack<PaperBean> callBack) {
+    public void loadData(ILoadDataCallBack<PaperBean> callBack) {
         Cursor c = mTable.select();
         if (c.getCount() != 0) {
             if (c.moveToFirst()) {
                 list.clear();
                 do {
-                    String title = c.getString(c.getColumnIndex(PaperListTable.column_title));
-                    String remark = c.getString(c.getColumnIndex(PaperListTable.column_remark));
-                    String date = c.getString(c.getColumnIndex(PaperListTable.column_date));
+                    String title = c.getString(c.getColumnIndex(PaperTable.column_name));
+                    String remark = c.getString(c.getColumnIndex(PaperTable.column_remark));
+                    String date = c.getString(c.getColumnIndex(PaperTable.column_date));
                     if (!title.trim().equals("")) {
                         PaperBean bean = new PaperBean(title, remark, date);
                         list.add(bean);
@@ -59,23 +59,19 @@ public class PaperListModel implements IDataOperatorModel<PaperBean> {
                 } while (c.moveToNext());
             }
             callBack.onSucceed(list);
+        } else {
+            callBack.onFailed("数据为空");
         }
     }
 
-    @Override
-    public int selectData(int id) {
-        return 0;
-    }
-
-    private int getID(int id) {
+    public int getID(int position) {
         Cursor c = mTable.select();
         if (c.getCount() > 0) {
             c.moveToFirst();
-            for (int i = 0; i < id; i++) {
+            for (int i = 0; i < position; i++) {
                 c.moveToNext();
             }
-            int _id = c.getInt(c.getColumnIndex("_id"));
-            return _id;
+            return c.getInt(c.getColumnIndex("_id"));
         }
         return -1;
     }

@@ -107,7 +107,7 @@ public class RequestAccessActivity extends BaseLoadingActivity {
                     Toast.makeText(this, "请选择一张照片", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                showLoading();
+                showLoadingDialog();
                 AVObject product = new AVObject("Product");
                 product.put("userID", et_id.getText().toString());
                 product.put("userName", et_name.getText().toString());
@@ -115,7 +115,7 @@ public class RequestAccessActivity extends BaseLoadingActivity {
                 product.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(AVException e) {
-                        dismissLoading();
+                        dismissLoadingDialog();
                         if (e == null) {
                             Toast.makeText(RequestAccessActivity.this, "申请成功", Toast.LENGTH_SHORT).show();
                             finish();

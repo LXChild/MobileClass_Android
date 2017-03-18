@@ -184,7 +184,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
 
     @Override
     public void update(Observable o, Object arg) {
-        dismissLoading();
+        dismissLoadingDialog();
         Message msg = (Message) arg;
         switch (msg.what) {
             case 0x01:
@@ -228,7 +228,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login:  //登陆
-                showLoading();
+                showLoadingDialog();
                 mSignInPresenter.saveAccount(getUserID(), getPassword());
                 mSignInPresenter.verifyAccount(getUserID(), getPassword(), et_agnomen.getText().toString().trim());
                 break;
@@ -265,7 +265,7 @@ public class SignInActivity extends BaseLoadingActivity implements ISignInView, 
                 et_agnomen.setText("");
                 break;
             case R.id.bt_agnomen:
-                showLoading();
+                showLoadingDialog();
                 mSignInPresenter.getAgnomenCode();
                 break;
         }

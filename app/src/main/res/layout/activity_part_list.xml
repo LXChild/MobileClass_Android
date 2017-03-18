@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cl_part_list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lxchild.classTest.partList.PartListActivity">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_part_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cdcdcd"
+        android:divider="#ffff0000"
+        android:dividerHeight="10dp"/>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/dimen_20"
+        android:src="@drawable/ic_add"
+        app:elevation="6dp"
+        app:layout_behavior="com.lxchild.classTest.partList.ScrollAwareFABBehavior"
+        app:pressedTranslationZ="12dp"
+        app:rippleColor="#33728dff"/>
+
+</android.support.design.widget.CoordinatorLayout>

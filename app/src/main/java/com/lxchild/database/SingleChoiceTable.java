@@ -21,13 +21,14 @@ public class SingleChoiceTable extends TableHelper<SingleChoiceBean> {
     public static final String column_answer_d_name = "answerD";
     public static final String column_answer_r_name = "answerR";
     private final String createTable = "CREATE TABLE " + tb_name + " ("
-            + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + column_question_name + " TEXT DEFAULT \"\" UNIQUE, "
             + column_answer_a_name + " TEXT DEFAULT \"\", "
             + column_answer_b_name + " TEXT DEFAULT \"\", "
             + column_answer_c_name + " TEXT DEFAULT \"\", "
             + column_answer_d_name + " TEXT DEFAULT \"\", "
-            + column_answer_r_name + " TEXT DEFAULT \"\")";
+            + column_answer_r_name + " TEXT DEFAULT \"\", "
+            + ")";
     private final String dropTable = "DROP TABLE " + tb_name;
 
     public SingleChoiceTable(Context context) {

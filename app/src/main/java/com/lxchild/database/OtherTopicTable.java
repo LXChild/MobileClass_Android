@@ -17,9 +17,10 @@ public class OtherTopicTable extends TableHelper<OtherTopicBean> {
     public static final String column_question_name = "question";
     public static final String column_answer_name = "answer";
     private final String createTable = "CREATE TABLE " + tb_name + " ("
-            + "_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "_id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + column_question_name + " TEXT DEFAULT \"\" UNIQUE, "
-            + column_answer_name + " TEXT DEFAULT \"\")";
+            + column_answer_name + " TEXT DEFAULT \"\", "
+            + ")";
     private final String dropTable = "DROP TABLE " + tb_name;
 
     public OtherTopicTable(Context context) {

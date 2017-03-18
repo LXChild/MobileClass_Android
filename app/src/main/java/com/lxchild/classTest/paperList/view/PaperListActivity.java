@@ -17,10 +17,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.lxchild.DataOperatorMVP.view.IDataOperatorView;
 import com.lxchild.base.BaseLoadingActivity;
 import com.lxchild.bean.PaperBean;
 import com.lxchild.classTest.paperList.presenter.PaperListPresenter;
+import com.lxchild.classTest.partList.PartListActivity;
+import com.lxchild.dataMVP.IDataContract;
 import com.lxchild.mobileclass.R;
 import com.lxchild.utils.StringUtils;
 import com.lxchild.utils.TimeUtils;
@@ -35,16 +36,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PaperListActivity extends BaseLoadingActivity implements IDataOperatorView<PaperBean> {
+public class PaperListActivity extends BaseLoadingActivity implements IDataContract.IDataView<PaperBean> {
 
     @BindView(R.id.lv_paper_list)
     SwipeMenuListView mLvPaper;
-    private PaperListPresenter mPresenter;
     private PaperListAdapter mAdapter;
 
     private LinearLayout mEditDialogLayout;
 
     private ArrayList<PaperBean> mBeans = new ArrayList<>();
+
+    private IDataContract.IDataPresenter<PaperBean> mPresenter;
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, PaperListActivity.class));
@@ -56,9 +58,16 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
         setContentView(R.layout.activity_edit_paper);
         ButterKnife.bind(this);
 
-        mPresenter = new PaperListPresenter(this);
+        try {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        new PaperListPresenter(this);
         mAdapter = new PaperListAdapter(getContext(), mBeans);
-        mPresenter.selectData();
+        mPresenter.start();
         mLvPaper.setAdapter(mAdapter);
 
         mEditDialogLayout = (LinearLayout) findViewById(R.id.layout_paper_edit_dialog);
@@ -142,11 +151,25 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
                 return false;
             }
         });
+        mLvPaper.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                onLVItemClick(position);
+            }
+        });
+    }
+
+    private void onLVItemClick(int position) {
+        PaperListPresenter presenter = (PaperListPresenter) mPresenter;
+        int id = presenter.getID(position);
+        Intent intent = new Intent(this, PartListActivity.class);
+        intent.putExtra("PaperID", id);
+        startActivity(intent);
     }
 
     private void delete(int position) {
         mPresenter.deleteData(position);
-        mPresenter.selectData();
+        mPresenter.start();
     }
 
     private void edit(int position, PaperBean page) {
@@ -156,6 +179,15 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public void setLoadingIndicator(boolean active) {
+        if (active) {
+            showLoadingDialog();
+        } else {
+            dismissLoadingDialog();
+        }
     }
 
     @Override
@@ -205,9 +237,9 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
         final EditText et_remark = (EditText) dialog_layout.findViewById(R.id.et_paper_edit_dialog_remark);
 
         final AlertDialog.Builder connectDialog = new AlertDialog.Builder(this);
-        connectDialog.setTitle(R.string.paper_list_activity_edit_dialog_title);
+        connectDialog.setTitle(R.string.add);
         connectDialog.setView(dialog_layout);
-        connectDialog.setPositiveButton(R.string.paper__edit_dialog_positive_text,
+        connectDialog.setPositiveButton(R.string.confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -219,13 +251,13 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
                             if (!mPresenter.insertData(bean)) {
                                 Toast.makeText(getContext(), "添加试卷失败！请检查是否试卷名重复", Toast.LENGTH_SHORT).show();
                             }
-                            mPresenter.selectData();
+                            mPresenter.start();
                         } else {
                             Toast.makeText(getContext(), R.string.paper_edit_dialog_null_title, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-        connectDialog.setNegativeButton(R.string.paper_edit_dialog_negative_text, null);
+        connectDialog.setNegativeButton(R.string.cancel, null);
         connectDialog.show();
     }
 
@@ -239,9 +271,9 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
         et_remark.setText(bean.getRemark());
 
         final AlertDialog.Builder connectDialog = new AlertDialog.Builder(getContext());
-        connectDialog.setTitle(R.string.paper_edit_dialog_title_modify);
+        connectDialog.setTitle(R.string.modify);
         connectDialog.setView(dialog_layout);
-        connectDialog.setPositiveButton(R.string.paper__edit_dialog_positive_text,
+        connectDialog.setPositiveButton(R.string.confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -251,7 +283,7 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
                                     et_title.getText().toString(),
                                     et_remark.getText().toString(),
                                     TimeUtils.getCurrentTime()))) {
-                                mPresenter.selectData();
+                                mPresenter.start();
                             } else {
                                 Toast.makeText(getContext(), "更新试卷信息失败，请检查试卷名是否重复", Toast.LENGTH_SHORT).show();
                             }
@@ -261,7 +293,12 @@ public class PaperListActivity extends BaseLoadingActivity implements IDataOpera
                     }
                 }
         );
-        connectDialog.setNegativeButton(R.string.paper_edit_dialog_negative_text, null);
+        connectDialog.setNegativeButton(R.string.cancel, null);
         connectDialog.show();
+    }
+
+    @Override
+    public void setPresenter(IDataContract.IDataPresenter presenter) {
+        mPresenter = presenter;
     }
 }

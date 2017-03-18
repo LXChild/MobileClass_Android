@@ -9,8 +9,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.lxchild.dataMVP.IDataContract;
 import com.lxchild.base.BaseLoadingActivity;
-import com.lxchild.DataOperatorMVP.view.IDataOperatorView;
 import com.lxchild.bean.OtherTopicBean;
 import com.lxchild.classTest.otherTopic.presenter.OtherTopicPresenter;
 import com.lxchild.mobileclass.R;
@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OtherTopicActivity extends BaseLoadingActivity implements IDataOperatorView<OtherTopicBean> {
+public class OtherTopicActivity extends BaseLoadingActivity implements IDataContract.IDataView<OtherTopicBean> {
 
     @BindView(R.id.et_other_topic_question)
     EditText mEtOtherTopicQuestion;
@@ -37,7 +37,7 @@ public class OtherTopicActivity extends BaseLoadingActivity implements IDataOper
     @BindView(R.id.activity_other_topic)
     LinearLayout mActivityOtherTopic;
 
-    private OtherTopicPresenter mTopicPresenter;
+    private IDataContract.IDataPresenter<OtherTopicBean> mTopicPresenter;
 
     public static void launch(Context context) {
         context.startActivity(new Intent(context, OtherTopicActivity.class));
@@ -57,7 +57,7 @@ public class OtherTopicActivity extends BaseLoadingActivity implements IDataOper
         }
         setTitle("其他题目");
 
-        mTopicPresenter = new OtherTopicPresenter(this);
+        new OtherTopicPresenter(this);
     }
 
     @OnClick({R.id.btn_other_topic_previous, R.id.btn_other_topic_next, R.id.btn_other_topic_complete})
@@ -103,6 +103,15 @@ public class OtherTopicActivity extends BaseLoadingActivity implements IDataOper
     }
 
     @Override
+    public void setLoadingIndicator(boolean active) {
+        if (active) {
+            showLoadingDialog();
+        } else {
+            dismissLoadingDialog();
+        }
+    }
+
+    @Override
     public Context getContext() {
         return this;
     }
@@ -119,5 +128,10 @@ public class OtherTopicActivity extends BaseLoadingActivity implements IDataOper
     @Override
     public void loadDataFailed(String result) {
 
+    }
+
+    @Override
+    public void setPresenter(IDataContract.IDataPresenter presenter) {
+        mTopicPresenter = presenter;
     }
 }

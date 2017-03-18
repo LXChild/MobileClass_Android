@@ -3,10 +3,10 @@ package com.lxchild.classTest.otherTopic.model;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.lxchild.dataMVP.IDataContract;
 import com.lxchild.bean.OtherTopicBean;
-import com.lxchild.callBack.IListOperatorCallBack;
+import com.lxchild.callBack.ILoadDataCallBack;
 import com.lxchild.database.OtherTopicTable;
-import com.lxchild.DataOperatorMVP.model.IDataOperatorModel;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import java.util.List;
  * Created by LXChild on 29/10/2016.
  */
 
-public class OtherTopicModel implements IDataOperatorModel<OtherTopicBean> {
+public class OtherTopicModel implements IDataContract.IDataModel<OtherTopicBean> {
     private OtherTopicTable mOtherTopicTable;
 
     public OtherTopicModel(Context context) {
@@ -39,7 +39,7 @@ public class OtherTopicModel implements IDataOperatorModel<OtherTopicBean> {
     }
 
     @Override
-    public void selectData(IListOperatorCallBack<OtherTopicBean> callBack) {
+    public void loadData(ILoadDataCallBack<OtherTopicBean> callBack) {
         Cursor c = mOtherTopicTable.select();
         if (c.getCount() != 0) {
             List<OtherTopicBean> list = new ArrayList<>();
@@ -57,10 +57,5 @@ public class OtherTopicModel implements IDataOperatorModel<OtherTopicBean> {
             }
             callBack.onSucceed(list);
         }
-    }
-
-    @Override
-    public int selectData(int id) {
-        return 0;
     }
 }
